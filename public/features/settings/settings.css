@@ -1,0 +1,119 @@
+/* ===== 資料庫使用空間 ===== */
+.storage-usage {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.storage-total-text {
+    font-size: 13px;
+    color: #555;
+}
+
+.storage-bar {
+    height: 14px;
+    background: #e8e8e8;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.storage-bar-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 7px;
+    transition: width 0.3s ease;
+}
+
+.storage-bar-fill.warning {
+    background: linear-gradient(90deg, #f59e0b, #ef4444);
+}
+
+.storage-list {
+    max-height: 260px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.storage-empty {
+    padding: 16px;
+    text-align: center;
+    color: #999;
+    font-size: 13px;
+}
+
+.storage-item {
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.storage-item:last-child {
+    border-bottom: none;
+}
+
+.storage-item-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.storage-item-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.storage-item-size {
+    font-size: 12px;
+    color: #666;
+    flex-shrink: 0;
+}
+
+.storage-item-delete {
+    padding: 4px 10px;
+    border: none;
+    border-radius: 6px;
+    background: #ff5f57;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.storage-item-bar {
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.storage-item-fill {
+    height: 100%;
+    background: #45b7d1;
+    border-radius: 4px;
+}
+
+/* 管理者 */
+.admin-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.admin-password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+}
