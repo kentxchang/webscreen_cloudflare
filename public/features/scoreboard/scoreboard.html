@@ -1,0 +1,19 @@
+<!-- 計分板 -->
+<div class="modal" id="scoreboard-modal" style="width:500px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('scoreboard-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">小組計分板</div>
+    </div>
+    <div class="modal-content">
+        <div class="scoreboard" id="scoreboard">
+            <!-- 動態生成 -->
+        </div>
+        <div style="text-align:center;margin-top:15px;">
+            <button class="timer-btn timer-preset" onclick="resetScores()">全部歸零</button>
+        </div>
+    </div>
+</div>
