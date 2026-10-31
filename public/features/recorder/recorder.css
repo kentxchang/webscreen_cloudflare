@@ -1,0 +1,31 @@
+/* ===== 螢幕錄影 ===== */
+.recorder-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.record-btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.record-btn.idle {
+    background: #ff5f57;
+    color: white;
+}
+
+.record-btn.recording {
+    background: #28ca41;
+    animation: pulse 1s infinite;
+}
+
+.record-status {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #666;
+}
