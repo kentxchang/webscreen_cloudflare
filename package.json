@@ -1,0 +1,9 @@
+{
+  "name": "classroom-dashboard-cloudflare",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "npx -y wrangler@4 deploy",
+    "dev": "npx -y wrangler@4 dev"
+  }
+}
