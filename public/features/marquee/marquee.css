@@ -1,0 +1,62 @@
+/* ===== 跑馬燈 ===== */
+.marquee-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10003;
+    overflow: hidden;
+    pointer-events: none;
+    display: none;
+}
+
+.marquee-container.active {
+    display: block;
+}
+
+.marquee-text {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marquee-scroll linear infinite;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes marquee-scroll {
+    0% {
+        transform: translateX(100vw);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.marquee-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.marquee-settings label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.marquee-settings input[type="text"],
+.marquee-settings input[type="number"],
+.marquee-settings select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.marquee-settings input[type="color"] {
+    width: 50px;
+    height: 35px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
