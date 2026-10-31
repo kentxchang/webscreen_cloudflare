@@ -1,0 +1,258 @@
+<!-- 側邊欄 -->
+<div class="sidebar left" id="sidebar">
+    <!-- 控制按鈕（並排的小按鈕） -->
+    <div class="sidebar-controls">
+        <div class="sidebar-item toggle-item">
+            <button class="sidebar-btn toggle-btn" onclick="hideSidebar()" title="隱藏工具列">☰</button>
+            <span class="sidebar-label">隱藏</span>
+        </div>
+        <div class="sidebar-item toggle-item">
+            <button class="sidebar-btn toggle-btn" onclick="toggleSidebarPosition()" id="position-toggle" title="切換工具列位置">⇄</button>
+            <span class="sidebar-label">切換</span>
+        </div>
+    </div>
+
+    <!-- 釘選的常用工具與分類按鈕（由 core.js 的 initToolbar() 產生） -->
+    <div class="sidebar-pinned" id="sidebar-pinned"></div>
+    <div class="sidebar-categories" id="sidebar-categories"></div>
+
+    <!-- ===== 各分類的工具 =====
+         網頁開啟時會移到彈出面板（#tool-flyout），側邊欄只顯示分類按鈕。
+         新增工具：在對應分類加一個 .sidebar-item；新增分類：加一個帶 data-category、data-icon 的 .sidebar-section -->
+
+    <!-- 白板工具 -->
+    <div class="sidebar-section whiteboard" data-category="白板" data-icon="🖌️">
+        <div class="sidebar-item" id="drawing-item">
+            <button class="sidebar-btn" onclick="toggleDrawingMode()" id="drawing-toggle" title="繪圖模式">
+                <span>✏️</span>
+            </button>
+            <span class="sidebar-label">畫筆</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('background-modal')" title="背景設定">
+                <span>🎨</span>
+            </button>
+            <span class="sidebar-label">背景</span>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- 班級經營 -->
+    <div class="sidebar-section classroom" data-category="班級" data-icon="🏫">
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('clock-modal')" title="時鐘">
+                <span>🕐</span>
+            </button>
+            <span class="sidebar-label">時鐘</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('timer-modal')" title="計時器">
+                <span>⏱️</span>
+            </button>
+            <span class="sidebar-label">計時器</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('scoreboard-modal')" title="計分板">
+                <span>🏆</span>
+            </button>
+            <span class="sidebar-label">計分板</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('noise-modal')" title="噪音偵測">
+                <span>🔊</span>
+            </button>
+            <span class="sidebar-label">噪音</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="toggleSpotlight()" title="聚光燈">
+                <span>🔦</span>
+            </button>
+            <span class="sidebar-label">聚光燈</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('todo-modal')" title="待辦清單">
+                <span>📝</span>
+            </button>
+            <span class="sidebar-label">待辦</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openNoteLayer()" title="文字便利貼">
+                <span>🗒️</span>
+            </button>
+            <span class="sidebar-label">便利貼</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('marquee-modal')" title="跑馬燈">
+                <span>📢</span>
+            </button>
+            <span class="sidebar-label">跑馬燈</span>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- 遊戲化互動 -->
+    <div class="sidebar-section games" data-category="遊戲" data-icon="🎮">
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('lottery-modal')" title="抽籤">
+                <span>🎲</span>
+            </button>
+            <span class="sidebar-label">抽籤</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('wheel-modal')" title="轉盤">
+                <span>🎡</span>
+            </button>
+            <span class="sidebar-label">轉盤</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('dice-modal')" title="骰子">
+                <span>🎯</span>
+            </button>
+            <span class="sidebar-label">骰子</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('coin-modal')" title="硬幣">
+                <span>🪙</span>
+            </button>
+            <span class="sidebar-label">硬幣</span>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- 資源瀏覽 -->
+    <div class="sidebar-section resources" data-category="資源" data-icon="📚">
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openWebLayer()" title="網頁">
+                <span>🌐</span>
+            </button>
+            <span class="sidebar-label">網頁</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openPdfLayer()" title="PDF">
+                <span>📄</span>
+            </button>
+            <span class="sidebar-label">PDF</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openImageLayer()" title="圖片">
+                <span>🖼️</span>
+            </button>
+            <span class="sidebar-label">圖片</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openHtmlLayer()" title="上傳 HTML">
+                <span>🧩</span>
+            </button>
+            <span class="sidebar-label">HTML</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openMindmapLayer()" title="心智圖">
+                <span>🧠</span>
+            </button>
+            <span class="sidebar-label">心智圖</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openSlideshowLayer()" title="依序呈現">
+                <span>📽️</span>
+            </button>
+            <span class="sidebar-label">依序呈現</span>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- 多媒體 -->
+    <div class="sidebar-section media" data-category="多媒體" data-icon="🎬">
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openWebcam()" title="實物投影">
+                <span>📷</span>
+            </button>
+            <span class="sidebar-label">投影</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openRecorder()" title="螢幕錄影">
+                <span>⏺️</span>
+            </button>
+            <span class="sidebar-label">錄影</span>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- 雲端功能 -->
+    <div class="sidebar-section cloud-section" data-category="雲端" data-icon="☁️">
+        <div class="sidebar-item edit-only">
+            <button class="sidebar-btn" onclick="newScreen()" title="新增畫面">
+                <span>🆕</span>
+            </button>
+            <span class="sidebar-label">新畫面</span>
+        </div>
+        <div class="sidebar-item edit-only">
+            <button class="sidebar-btn" onclick="openModal('cloud-save-modal')" title="雲端存檔">
+                <span>☁️</span>
+            </button>
+            <span class="sidebar-label">雲端存</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('cloud-load-modal')" title="雲端讀檔">
+                <span>📂</span>
+            </button>
+            <span class="sidebar-label">雲端讀</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('share-modal')" title="分享連結">
+                <span>🔗</span>
+            </button>
+            <span class="sidebar-label">分享</span>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- 系統設定 -->
+    <div class="sidebar-section settings" data-category="系統" data-icon="⚙️">
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="openModal('settings-modal'); loadStorageUsage()" title="設定">
+                <span>🎛️</span>
+            </button>
+            <span class="sidebar-label">設定</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="toggleSize()" title="縮放">
+                <span>🔍</span>
+            </button>
+            <span class="sidebar-label">縮放</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="exportState()" title="匯出">
+                <span>📤</span>
+            </button>
+            <span class="sidebar-label">匯出</span>
+        </div>
+        <div class="sidebar-item">
+            <button class="sidebar-btn" onclick="document.getElementById('import-file').click()" title="匯入">
+                <span>📥</span>
+            </button>
+            <span class="sidebar-label">匯入</span>
+            <input type="file" id="import-file" accept=".json" style="display:none" onchange="importState(event)">
+        </div>
+    </div>
+</div>
+
+<!-- 顯示側邊欄按鈕 -->
+<button class="sidebar-btn" id="show-sidebar-btn" style="position:fixed;top:10px;left:10px;z-index:9999;display:none;" onclick="showSidebar()">
+    <span>☰</span>
+</button>
+
+<!-- 載入動畫覆蓋層 -->
+<div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+</div>
+
+<!-- 版權信息 -->
+<div class="credit">
+    Made by <a href="https://kentxchang.blogspot.tw" target="_blank">阿剛老師</a> | Cloudflare 雲端版
+</div>
