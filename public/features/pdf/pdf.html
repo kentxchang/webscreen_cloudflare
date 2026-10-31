@@ -1,0 +1,35 @@
+<!-- PDF 管理圖層（獨立圖層，不屬於畫面上的物件；畫面上的 PDF 視窗由 pdf.js 動態建立） -->
+<div class="manage-layer" id="pdf-layer" onclick="if (event.target === this) closePdfLayer()">
+    <div class="manage-layer-panel" id="pdf-layer-panel">
+        <div class="manage-layer-header">
+            <h2>PDF 管理</h2>
+            <button class="manage-layer-close" onclick="closePdfLayer()" title="關閉">×</button>
+        </div>
+
+        <div class="gas-settings-container">
+            <div class="gas-input-group edit-only">
+                <label>上傳 PDF 檔案（可一次選多個，也可以直接把檔案拖曳到這裡）</label>
+                <input type="file" id="pdf-upload-file" accept=".pdf,application/pdf" multiple style="display:none" onchange="uploadPdfFiles(event)">
+                <button class="gas-btn gas-btn-primary" onclick="document.getElementById('pdf-upload-file').click()">📁 選擇 PDF 檔案</button>
+            </div>
+
+            <div class="gas-input-group edit-only">
+                <label>或輸入 PDF 網址</label>
+                <div class="pdf-url-row">
+                    <input type="text" class="gas-input" id="pdf-add-url" placeholder="https://...pdf">
+                    <input type="text" class="gas-input" id="pdf-add-name" placeholder="名稱（可留空）">
+                    <button class="gas-btn gas-btn-success" onclick="addPdfFromUrl()">加入</button>
+                </div>
+                <small style="color:#666;font-size:11px;">該網址的伺服器需允許跨網域讀取（CORS），否則無法載入。</small>
+            </div>
+
+            <div class="manage-status" id="pdf-status"></div>
+
+            <div class="gas-input-group">
+                <label>已加入的 PDF（<span id="pdf-item-count">0</span> 個，共約 <span id="pdf-total-size">0 B</span>）</label>
+                <div class="manage-list" id="pdf-item-list" data-empty="尚未加入 PDF"></div>
+            </div>
+            <small style="color:#666;font-size:11px;">每頁轉成寬 1024 像素的 JPEG，存在目前畫面的雲端存檔中；顯示的大小約等於存檔後佔用的資料庫空間。畫面上的 PDF 可點左右兩側或按鍵盤 ← →（PageUp／PageDown）換頁；工具列的「🔗 設定連結」可在頁面上拉出區塊設定超連結，下載壓縮 PDF 時會一起保留（在 Chrome、Edge、Firefox 內開啟下載的 PDF 時，點連結預設會在原分頁開啟；按住 Ctrl（Mac 為 ⌘）再點，或用滑鼠中鍵點，即可開新分頁）。</small>
+        </div>
+    </div>
+</div>
