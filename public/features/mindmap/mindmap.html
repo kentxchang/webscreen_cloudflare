@@ -1,0 +1,70 @@
+<!-- 心智圖管理圖層（獨立圖層，不屬於畫面上的物件） -->
+<div class="manage-layer" id="mindmap-layer" onclick="if (event.target === this) closeMindmapLayer()">
+    <div class="manage-layer-panel">
+        <div class="manage-layer-header">
+            <h2>心智圖管理</h2>
+            <button class="manage-layer-close" onclick="closeMindmapLayer()" title="關閉">×</button>
+        </div>
+
+        <div class="gas-settings-container">
+            <div class="gas-input-group edit-only">
+                <label>新增心智圖</label>
+                <input type="text" class="gas-input" id="mindmap-new-name" placeholder="輸入心智圖名稱（也是中心主題）...">
+                <details class="mindmap-paste">
+                    <summary>貼上範本格式的內容（選填）</summary>
+                    <textarea class="gas-input mindmap-md" id="mindmap-new-md" placeholder="# 中心主題&#10;## 重點一&#10;### 子重點 1.1&#10;## 重點二"></textarea>
+                    <small class="mindmap-hint">格式：每行一個節點，# 為中心主題、## 為主分支、### 為子分支，以此類推；也可用 [文字](網址) 加超連結、![說明](圖片網址) 加圖片。</small>
+                    <div class="mindmap-paste-actions">
+                        <input type="file" id="mindmap-md-file" accept=".md,.txt" style="display:none" onchange="loadMindmapMdFile(event)">
+                        <button class="gas-btn" onclick="document.getElementById('mindmap-md-file').click()">📁 讀取 .md 檔</button>
+                        <button class="gas-btn" onclick="toggleMindmapPrompt()">💡 參考 Prompt</button>
+                    </div>
+                    <div class="mindmap-prompt" id="mindmap-prompt">
+                        <pre id="mindmap-prompt-text"># 任務：生成心智圖 Markdown 語法 (純文字版)
+
+請你扮演一位特定領域的專家，為「[請填入您的對象]」（例如：國小高年級學生、初學者、專業人士等）設計一份關於「[請填入您的主題]」的純文字心智圖。
+
+## 格式要求 (極為重要)：
+
+請你「務必」且「只能」使用以下的 Markdown 格式來生成內容：
+
+1.  **層級結構**：
+    * **根節點 (Root)**：必須使用一個 `#` (H1)。
+    * **主分支**：必須使用兩個 `##` (H2)。
+    * **子分支**：必須使用三個 `###` (H3)。
+    * **孫分支**：必須使用四個 `####` (H4)，以此類推。
+    * (請勿使用 `-` 或 `*` 列表符號來表示層級)。
+
+2.  **限制**：
+    * 每一行就是一個節點。
+    * 內容中**不可以**包含任何超連結 (例如 `[text](url)`) 或圖片 (例如 `![alt](url)`)。
+    * 第一行**必須是** `#` (H1) 根節點。
+
+## 範例結構：
+
+'''markdown
+# 範例主題
+## 重點一
+### 子重點 1.1
+### 子重點 1.2
+## 重點二
+### 子重點 2.1
+### 子重點 2.2
+#### 子重點 2.2.1
+## 重點三
+'''</pre>
+                        <button class="gas-btn gas-btn-primary" onclick="copyMindmapPrompt()">複製 Prompt</button>
+                    </div>
+                </details>
+                <button class="gas-btn gas-btn-success" onclick="addMindmap()">＋ 新增心智圖</button>
+            </div>
+
+            <div class="gas-input-group">
+                <label>已建立的心智圖（<span id="mindmap-item-count">0</span>）</label>
+                <div class="manage-list" id="mindmap-item-list" data-empty="尚未建立心智圖"></div>
+            </div>
+            <div class="manage-status" id="mindmap-status"></div>
+            <small style="color:#666;font-size:11px;">心智圖存在目前畫面的雲端存檔中。「放到畫面」以視窗開啟心智圖，可直接編輯（節點、超連結、圖片、匯入 MD、簡報模式、匯出 PNG / HTML / 影片）；「分享」會開啟並複製此心智圖的獨立網址，同時顯示 QR Code，分享頁面只能瀏覽（需先雲端存檔；畫面有未存的變更時會先更新存檔）。</small>
+        </div>
+    </div>
+</div>
