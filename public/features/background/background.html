@@ -1,0 +1,48 @@
+<!-- 背景網頁 iframe -->
+<iframe id="bg-iframe" src="about:blank"></iframe>
+
+<!-- 背景設定 -->
+<div class="modal" id="background-modal" style="width:400px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('background-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">背景設定</div>
+    </div>
+    <div class="modal-content">
+        <div class="settings-group">
+            <label class="settings-label">教學底圖</label>
+            <div class="grid-options">
+                <button class="grid-btn" onclick="setGrid('none')">無</button>
+                <button class="grid-btn" onclick="setGrid('whiteboard')">白板</button>
+                <button class="grid-btn" onclick="setGrid('blackboard')">黑板</button>
+                <button class="grid-btn" onclick="setGrid('grid')">方格</button>
+                <button class="grid-btn" onclick="setGrid('tianzi')">田字格</button>
+                <button class="grid-btn" onclick="setGrid('mizi')">米字格</button>
+                <button class="grid-btn" onclick="setGrid('english')">英文四線</button>
+                <button class="grid-btn" onclick="setGrid('music')">五線譜</button>
+            </div>
+        </div>
+        <div class="settings-group">
+            <label class="settings-label">上傳背景圖片</label>
+            <div style="display:flex; gap: 8px; align-items: center;">
+                <input type="file" id="bg-image" accept="image/*" onchange="setBgImage(event)" style="flex: 1;">
+                <button onclick="clearBgImage()" title="清除背景圖片" class="gas-btn gas-btn-danger" style="padding: 8px 12px; font-size: 12px;">清除</button>
+            </div>
+        </div>
+        <div class="settings-group">
+            <label class="settings-label">背景透明度</label>
+            <input type="range" id="bg-opacity" min="0" max="100" value="30" onchange="setBgOpacity()">
+        </div>
+        <div class="settings-group">
+            <label class="settings-label">網頁背景</label>
+            <div style="display:flex;gap:8px;">
+                <input type="text" id="bg-url" placeholder="貼上網址..." style="flex:1;padding:8px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                <button onclick="setBgUrl()" style="padding:8px 12px;background:#667eea;color:white;border:none;border-radius:6px;cursor:pointer;">載入</button>
+            </div>
+            <button onclick="clearBgUrl()" style="margin-top:8px;padding:6px 12px;background:#ff5f57;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;">清除網頁背景</button>
+        </div>
+    </div>
+</div>
