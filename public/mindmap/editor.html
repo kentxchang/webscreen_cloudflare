@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>心智圖</title>
+  <style>
+    html, body { height:100%; margin:0; padding:0; font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; overflow:hidden; }
+    
+    /* Hamburger Menu Button */
+    #menu_toggle { position:fixed; top:15px; left:15px; width: 40px; height: 40px; background: #2c3e50; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 200; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid #34495e; }
+    #menu_toggle span, #menu_toggle span:before, #menu_toggle span:after { content: ''; position: absolute; width: 20px; height: 2px; background: #ecf0f1; transition: all 0.3s; }
+    #menu_toggle span:before { transform: translateY(-6px); }
+    #menu_toggle span:after { transform: translateY(6px); }
+    #menu_toggle.active span { background: transparent; }
+    #menu_toggle.active span:before { transform: rotate(45deg); }
+    #menu_toggle.active span:after { transform: rotate(-45deg); }
+
+    /* Top Slide-down Menu */
+    #top_menu { position: fixed; top: -150px; left: 0; right: 0; background: #34495e; padding: 15px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); z-index: 100; transition: top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    #top_menu.active { top: 0; }
+    .btn { padding: 8px 16px; border:none; border-radius: 20px; font-size: 14px; color: #fff; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform .1s, box-shadow .1s; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
+    .menu-separator { width: 2px; height: 25px; background-color: #4a6572; border-radius: 1px; }
+    #md_input_label { padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #fff; cursor: pointer; background-image: linear-gradient(45deg,#81c784,#388e3c); box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform .1s, box-shadow .1s; }
+    #md_input_label:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
+    #md_input { display: none; }
+    #btn_download { background-image: linear-gradient(45deg,#29b6f6,#0288d1); }
+    #btn_export_md { background-image: linear-gradient(45deg,#9575cd,#5e35b1); }
+    /* Floating Action Buttons */
+    #fab_container { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 150; }
+    .fab { width: 48px; height: 48px; border-radius: 50%; border: none; color: white; font-size: 24px; line-height: 48px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: all 0.2s; }
+    .fab:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0,0,0,0.4); }
+    #btn_add_child { background-image: linear-gradient(45deg, #ff8a65, #f4511e); }
+    #btn_add_sibling { background-image: linear-gradient(45deg, #4db6ac, #00897b); }
+    #btn_delete { background-image: linear-gradient(45deg, #f06292, #e91e63); }
+    #btn_add_link { background-image: linear-gradient(45deg, #4dd0e1, #00acc1); }
+    #btn_add_image { background-image: linear-gradient(45deg, #ffab40, #ff6f00); }
+    #btn_toggle_all { background-image: linear-gradient(45deg, #ab47bc, #8e24aa); }
+    #btn_presentation { background-image: linear-gradient(45deg, #5c6bc0, #3f51b5); }
+    #btn_reorder { background-image: linear-gradient(45deg, #546e7a, #37474f); }
+
+    /* Modal Styles */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-content { background: #fff; padding: 25px; border-radius: 10px; width: 90%; max-width: 700px; box-shadow: 0 5px 20px rgba(0,0,0,0.4); display: flex; flex-direction: column; max-height: 90vh; }
+    .modal-content h2 { margin-top: 0; color: #333; }
+    .modal-body { overflow-y: auto; }
+    .modal-content .modal-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; flex-shrink: 0; }
+    .modal-buttons .btn { background-image: linear-gradient(45deg, #546e7a, #37474f); } /* Darker Button Style */
+    .modal-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; box-sizing: border-box; }
+
+    /* Notification Layer */
+    #notification_layer { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); padding: 12px 25px; border-radius: 20px; color: #fff; font-size: 16px; z-index: 2000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    #notification_layer.show { top: 20px; }
+    #notification_layer.success { background-color: #2ecc71; }
+    #notification_layer.error { background-color: #e74c3c; }
+
+    /* Mindmap Container */
+    #jsmind_container { position: absolute; top: 0; bottom: 0; left: 0; right: 0; background: #ecf0f1; cursor: grab; overflow: hidden; }
+    .jsmind-inner { overflow:visible!important; transform-origin: 0 0; }
+    #jsmind_container.grabbing { cursor: grabbing; }
+    #attribution { position:absolute; bottom:10px; right:10px; padding:4px 8px; background:rgba(0,0,0,0.5); color:#fff; border-radius:4px; font-size:12px; z-index:10; }
+    #attribution a { color:#ffd54f; text-decoration:none; }
+
+    /* Presentation Mode Styles */
+    .presentation-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1e3c72, #2a5298); display: none; z-index: 2000; }
+    .presentation-content { width: 100%; height: 100%; display: flex; flex-direction: column; color: white; }
+    .presentation-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: rgba(0,0,0,0.2); }
+    .presentation-breadcrumb { font-size: 14px; opacity: 0.7; }
+    .presentation-controls { display: flex; align-items: center; gap: 15px; }
+    .presentation-btn { background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background 0.2s; }
+    .presentation-btn:hover { background: rgba(255,255,255,0.3); }
+    .presentation-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .slide-counter { font-size: 14px; min-width: 60px; text-align: center; }
+    .presentation-main { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 60px; text-align: center; position: relative; }
+    .presentation-breadcrumb-corner { position: absolute; top: 30px; left: 30px; font-size: 16px; opacity: 0.5; line-height: 1.4; max-width: 300px; }
+    .presentation-title { font-size: 8em; font-weight: bold; line-height: 1.1; text-shadow: 3px 3px 6px rgba(0,0,0,0.4); max-width: 90%; word-wrap: break-word; transition: opacity 1.2s ease-in-out; opacity: 1; }
+    .presentation-title.active { opacity: 1; }
+    .presentation-title.fade-out { opacity: 0 !important; }
+    .presentation-title.fade-in { opacity: 0 !important; }
+    .presentation-children { display: none; }
+    .presentation-child { display: none; }
+    .presentation-child:hover { display: none; }
+    .presentation-child.selected { display: none; }
+
+    /* ── 投影片影片匯出 ─────────────────────────────────────── */
+    #btn_slide_video { background-image: linear-gradient(45deg, #e53935, #b71c1c); }
+
+    #sv_preview_overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      display: none; flex-direction: column; z-index: 3000;
+    }
+    #sv_preview_stage {
+      flex: 1; overflow: hidden; position: relative; display: flex;
+      align-items: stretch; justify-content: stretch;
+    }
+    #sv_preview_inner {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      box-sizing: border-box;
+    }
+    #sv_preview_controls {
+      padding: 13px 28px; background: rgba(8,8,8,0.97);
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.08); flex-shrink: 0;
+      gap: 12px;
+    }
+    #sv_slide_title {
+      color: #777; font-size: 13px; max-width: 280px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    #sv_counter { color: #ccc; font-size: 14px; min-width: 72px; text-align: center; }
+    .sv-nav-btn {
+      background: rgba(255,255,255,0.14); border: none; color: #fff;
+      padding: 8px 18px; border-radius: 8px; cursor: pointer;
+      font-size: 15px; transition: background 0.18s;
+    }
+    .sv-nav-btn:hover { background: rgba(255,255,255,0.26); }
+    .sv-nav-btn:disabled { opacity: 0.28; cursor: not-allowed; }
+    .sv-action-btn {
+      padding: 9px 20px; border: none; border-radius: 20px;
+      font-size: 14px; color: #fff; cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .sv-action-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(0,0,0,0.5); }
+
+    #sv_progress_overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.93); display: none;
+      align-items: center; justify-content: center;
+      flex-direction: column; gap: 18px; z-index: 4000;
+    }
+    #sv_progress_icon { font-size: 56px; animation: sv-pulse 1.4s ease-in-out infinite; }
+    @keyframes sv-pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.12);} }
+    #sv_progress_text { color: #fff; font-size: 18px; text-align: center; }
+    #sv_progress_sub  { color: #777; font-size: 13px; text-align: center; }
+
+    /* 色票 */
+    #sv_color_swatches { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .sv-swatch {
+      width: 34px; height: 34px; border-radius: 7px; cursor: pointer;
+      border: 2px solid rgba(255,255,255,0.15);
+      transition: border-color 0.15s, transform 0.1s;
+    }
+    .sv-swatch:hover { transform: scale(1.12); }
+    .sv-swatch.active { border-color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,0.4); }
+
+    /* ── 大屏工具整合 ─────────────────────────────────────── */
+    /* 分享頁面只能瀏覽：隱藏編輯用的按鈕 */
+    body.view-only .edit-only { display: none !important; }
+    /* 放在畫面視窗中時空間較小，按鈕縮小 */
+    @media (max-height: 640px) {
+      #fab_container { top: 10px; right: 10px; gap: 6px; }
+      .fab { width: 36px; height: 36px; font-size: 18px; line-height: 36px; }
+      #menu_toggle { top: 10px; left: 10px; width: 34px; height: 34px; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsmind@0.6.1/style/jsmind.css">
+  <script src="https://cdn.jsdelivr.net/npm/jsmind@0.6.1/js/jsmind.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsmind@0.6.1/js/jsmind.draggable-node.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+  <div id="menu_toggle"><span></span></div>
+
+  <div id="top_menu">
+    <button id="btn_open_md_import" class="btn edit-only" style="background-image: linear-gradient(45deg,#81c784,#388e3c);">匯入 MD</button>
+    <div class="menu-separator edit-only"></div>
+    <button id="btn_download" class="btn">下載 HTML</button>
+    <button id="btn_download_png" class="btn" style="background-image: linear-gradient(45deg,#ff7043,#e64a19);">下載 PNG</button>
+    <button id="btn_export_md" class="btn">匯出 MD</button>
+  </div>
+
+  <div id="fab_container">
+    <button id="btn_add_child" class="fab edit-only" title="新增子節點">+</button>
+    <button id="btn_add_sibling" class="fab edit-only" title="新增同階節點">~</button>
+    <button id="btn_delete" class="fab edit-only" title="刪除節點">-</button>
+    <button id="btn_add_link" class="fab edit-only" title="新增/編輯超連結">🔗</button>
+    <button id="btn_add_image" class="fab edit-only" title="新增/編輯圖片">🖼️</button>
+    <button id="btn_reorder" class="fab" title="左右排列">↔</button>
+    <button id="btn_toggle_all" class="fab" title="展開/收合所有節點">⚡</button>
+    <button id="btn_presentation" class="fab" title="簡報模式">📺</button>
+    <button id="btn_slide_video" class="fab" title="匯出投影片影片">🎬</button>
+  </div>
+
+  <div id="jsmind_container"></div>
+  <div id="attribution">Made by <a href="https://kentxchang.blogspot.tw" target="_blank" rel="noopener">阿剛老師</a></div>
+  <div id="notification_layer"></div>
+
+  <!-- Presentation Mode -->
+  <div id="presentation_overlay" class="presentation-overlay">
+    <div class="presentation-content">
+      <div class="presentation-header">
+        <div class="presentation-breadcrumb"></div>
+        <div class="presentation-controls">
+          <button class="presentation-btn" id="btn_prev_slide">◀</button>
+          <span class="slide-counter"></span>
+          <button class="presentation-btn" id="btn_next_slide">▶</button>
+          <button class="presentation-btn" id="btn_exit_presentation">✕</button>
+        </div>
+      </div>
+      <div class="presentation-main">
+        <div class="presentation-breadcrumb-corner"></div>
+        <div class="presentation-title"></div>
+        <div class="presentation-children"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div id="md_import_modal_overlay" class="modal-overlay">
+    <div class="modal-content">
+        <h2>匯入 Markdown</h2>
+        <div class="modal-body">
+            <p>請選擇一個 .md 或 .txt 檔案上傳：</p>
+            <input type="file" id="md_file_input" accept=".md,.txt" class="modal-input">
+            <p style="text-align: center; margin: 15px 0;">或</p>
+            <p>直接貼上 Markdown 文字到下方：</p>
+            <textarea id="md_text_input" class="modal-input" rows="10" placeholder="# 根節點..."></textarea>
+        </div>
+        <div class="modal-buttons" style="display: flex; justify-content: space-between; align-items: center;">
+            <button id="btn_show_prompt" class="btn" style="background-image: linear-gradient(45deg,#64b5f6,#2196f3);">參考 Prompt</button>
+            <div>
+                <button id="btn_cancel_md_import" class="btn">取消</button>
+                <button id="btn_process_md_import" class="btn">開始匯入</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div id="link_modal_overlay" class="modal-overlay">
+      <div class="modal-content">
+          <h2>設定節點超連結</h2>
+          <p>請貼上要連結的網址 (留空則清除連結):</p>
+          <input type="text" id="link_url_input" class="modal-input" placeholder="https://example.com">
+          <div class="modal-buttons">
+              <button id="btn_cancel_link" class="btn">取消</button>
+              <button id="btn_save_link" class="btn">儲存</button>
+          </div>
+      </div>
+  </div>
+
+  <div id="image_url_modal_overlay" class="modal-overlay">
+      <div class="modal-content">
+          <h2>設定節點圖片</h2>
+          
+          <!-- 本機上傳圖片 -->
+          <p style="font-weight: bold; margin-bottom: 5px; text-align: left;">方式一：上傳本機圖片 (自動壓縮)</p>
+          <input type="file" id="image_file_input" accept="image/*" class="modal-input" style="padding: 6px; cursor: pointer;">
+          <div id="upload_status" style="text-align: center; margin: 10px 0; font-size: 13px; color: #666; font-weight: bold;"></div>
+
+          <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0;">
+            <hr style="flex-grow: 1; border-top: 1px solid #ddd;">
+            <span style="color: #999; font-size: 13px;">或</span>
+            <hr style="flex-grow: 1; border-top: 1px solid #ddd;">
+          </div>
+
+          <!-- 貼上圖片網址 -->
+          <p style="font-weight: bold; margin-bottom: 5px; text-align: left;">方式二：貼上圖片網址 (留空則清除圖片)</p>
+          <input type="text" id="image_url_input" class="modal-input" placeholder="https://example.com/image.png">
+
+          <div class="modal-buttons" style="margin-top: 25px;">
+              <button id="btn_cancel_image_url" class="btn">取消</button>
+              <button id="btn_save_image_url" class="btn">儲存</button>
+          </div>
+      </div>
+  </div>
+
+  <div id="prompt_modal_overlay" class="modal-overlay">
+    <div class="modal-content">
+        <h2>參考 Prompt</h2>
+        <div class="modal-body">
+            <div class="code-container" style="position: relative;">
+                <button id="btn_copy_prompt" class="btn" style="position: absolute; top: 10px; right: 10px; background-image: linear-gradient(45deg,#66bb6a,#388e3c);">複製</button>
+                <pre><code id="prompt_text_block"># 任務：生成心智圖 Markdown 語法 (純文字版)
+
+請你扮演一位特定領域的專家，為「[請填入您的對象]」（例如：國小高年級學生、初學者、專業人士等）設計一份關於「[請填入您的主題]」的純文字心智圖。
+
+## 格式要求 (極為重要)：
+
+請你「務必」且「只能」使用以下的 Markdown 格式來生成內容：
+
+1.  **層級結構**：
+    * **根節點 (Root)**：必須使用一個 `#` (H1)。
+    * **主分支**：必須使用兩個 `##` (H2)。
+    * **子分支**：必須使用三個 `###` (H3)。
+    * **孫分支**：必須使用四個 `####` (H4)，以此類推。
+    * (請勿使用 `-` 或 `*` 列表符號來表示層級)。
+
+2.  **限制**：
+    * 每一行就是一個節點。
+    * 內容中**不可以**包含任何超連結 (例如 `[text](url)`) 或圖片 (例如 `![alt](url)`)。
+    * 第一行**必須是** `#` (H1) 根節點。
+
+## 範例結構：
+
+'''markdown
+# 範例主題
+## 重點一
+### 子重點 1.1
+### 子重點 1.2
+## 重點二
+### 子重點 2.1
+### 子重點 2.2
+#### 子重點 2.2.1
+## 重點三
+'''</code></pre>
+            </div>
+        </div>
+        <div class="modal-buttons">
+            <button id="btn_close_prompt" class="btn">關閉</button>
+        </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       投影片影片匯出：設定 Modal
+  ════════════════════════════════════════════════════════ -->
+  <div id="sv_modal_overlay" class="modal-overlay">
+    <div class="modal-content" style="max-width:490px;">
+      <h2>🎬 匯出投影片影片</h2>
+      <div class="modal-body">
+        <p style="color:#666;font-size:13px;margin-top:0;line-height:1.7;">
+          將心智圖轉為逐頁投影片影片：<strong>H1 / H2</strong> 各為單張標題頁，
+          <strong>H3 + H4</strong> 合為一頁內容頁，文字逐行淡入出現。
+        </p>
+
+        <!-- 背景顏色 -->
+        <div style="margin-bottom:20px;">
+          <label style="display:block;margin-bottom:8px;font-weight:bold;color:#444;font-size:14px;">背景顏色</label>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+            <input type="color" id="sv_bg_color" value="#000000"
+              style="width:52px;height:44px;border:1px solid #ccc;border-radius:6px;cursor:pointer;padding:3px;">
+            <span id="sv_bg_hex" style="font-size:14px;color:#555;font-family:monospace;letter-spacing:0.05em;">#000000</span>
+          </div>
+          <div id="sv_color_swatches">
+            <div class="sv-swatch active" style="background:#000000" data-color="#000000" title="純黑（預設）"></div>
+            <div class="sv-swatch" style="background:#0d1117" data-color="#0d1117" title="深夜藍黑"></div>
+            <div class="sv-swatch" style="background:#1a1a2e" data-color="#1a1a2e" title="深靛藍"></div>
+            <div class="sv-swatch" style="background:#0f2027" data-color="#0f2027" title="深海藍綠"></div>
+            <div class="sv-swatch" style="background:#1c1c1e" data-color="#1c1c1e" title="炭黑"></div>
+            <div class="sv-swatch" style="background:#2c2c54" data-color="#2c2c54" title="深紫"></div>
+            <div class="sv-swatch" style="background:#ffffff;border-color:#ddd;" data-color="#ffffff" title="白色"></div>
+            <div class="sv-swatch" style="background:#f5f5f0;border-color:#ddd;" data-color="#f5f5f0" title="米白"></div>
+          </div>
+        </div>
+
+        <!-- 每頁時間 -->
+        <div style="margin-bottom:20px;">
+          <label style="display:block;margin-bottom:8px;font-weight:bold;color:#444;font-size:14px;">每頁顯示時間</label>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <input type="range" id="sv_duration_range" min="2" max="20" step="0.5" value="6"
+              style="flex:1;accent-color:#5c6bc0;">
+            <input type="number" id="sv_duration" value="6" min="2" max="20" step="0.5"
+              style="width:68px;padding:7px;border:1px solid #ccc;border-radius:5px;font-size:14px;text-align:center;">
+            <span style="color:#666;font-size:13px;white-space:nowrap;">秒</span>
+          </div>
+        </div>
+
+        <!-- 字體大小 -->
+        <div style="margin-bottom:20px;">
+          <label style="display:block;margin-bottom:8px;font-weight:bold;color:#444;font-size:14px;">字體大小</label>
+          <div id="sv_font_size_group" style="display:flex;gap:0;border:1px solid #ccc;border-radius:8px;overflow:hidden;">
+            <button class="sv-size-btn active" data-scale="1.0"
+              style="flex:1;padding:9px 0;border:none;background:#5c6bc0;color:#fff;font-size:14px;cursor:pointer;transition:background 0.15s;">預設</button>
+            <button class="sv-size-btn" data-scale="1.3"
+              style="flex:1;padding:9px 0;border:none;border-left:1px solid #ccc;background:#f5f5f5;color:#444;font-size:14px;cursor:pointer;transition:background 0.15s;">較大</button>
+            <button class="sv-size-btn" data-scale="1.6"
+              style="flex:1;padding:9px 0;border:none;border-left:1px solid #ccc;background:#f5f5f5;color:#444;font-size:14px;cursor:pointer;transition:background 0.15s;">最大</button>
+          </div>
+        </div>
+
+        <!-- 配色說明 -->
+        <div style="background:#f7f7f7;border-radius:8px;padding:14px;font-size:13px;line-height:2.1;border:1px solid #eee;">
+          <strong style="color:#333;">文字配色一覽：</strong><br>
+          <span style="color:#FFD700;font-weight:700;">■ H1 根節點</span> 金黃色 &nbsp;·&nbsp;
+          <span style="color:#3a8ad4;font-weight:700;">■ H2 主分支</span> 天藍色<br>
+          <span style="color:#4caf50;font-weight:700;">■ H3 子分支</span> 嫩綠色 &nbsp;·&nbsp;
+          <span style="color:#888;font-weight:700;">■ H4 細節</span> 淺灰白
+        </div>
+      </div>
+      <div class="modal-buttons">
+        <button id="btn_sv_cancel" class="btn" style="background-image:linear-gradient(45deg,#90a4ae,#607d8b);">取消</button>
+        <button id="btn_sv_open_preview" class="btn" style="background-image:linear-gradient(45deg,#5c6bc0,#3f51b5);">▶ 預覽投影片</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       投影片全螢幕預覽 Overlay
+  ════════════════════════════════════════════════════════ -->
+  <div id="sv_preview_overlay">
+    <div id="sv_preview_stage">
+      <div id="sv_preview_inner"></div>
+    </div>
+    <div id="sv_preview_controls">
+      <div id="sv_slide_title"></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button id="btn_sv_prev" class="sv-nav-btn">◀</button>
+        <span id="sv_counter" style="color:#ccc;font-size:14px;min-width:72px;text-align:center;">1 / 1</span>
+        <button id="btn_sv_next" class="sv-nav-btn">▶</button>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button id="btn_sv_back" class="sv-action-btn" style="background:rgba(255,255,255,0.18);">← 返回設定</button>
+        <button id="btn_sv_export" class="sv-action-btn" style="background:linear-gradient(45deg,#e53935,#b71c1c);">🎬 匯出影片</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       匯出進度 Overlay
+  ════════════════════════════════════════════════════════ -->
+  <div id="sv_progress_overlay">
+    <div id="sv_progress_icon">🎬</div>
+    <div id="sv_progress_text">正在匯出影片...</div>
+    <div id="sv_progress_sub">請勿關閉此視窗，完成後將自動下載</div>
+  </div>
+
+  <!-- Image Lightbox Overlay -->
+  <div id="image_lightbox_overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 6000; cursor: pointer; transition: all 0.3s ease;">
+    <div style="position: relative; max-width: 90%; max-height: 90%; display: flex; align-items: center; justify-content: center;">
+      <img id="lightbox_image" src="" alt="大圖預覽" style="max-width: 100%; max-height: 90vh; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); object-fit: contain;">
+      <div style="position: absolute; top: -40px; right: 0; color: #fff; font-size: 24px; font-weight: bold; cursor: pointer;">✕</div>
+    </div>
+  </div>
+
+  <script src="/mindmap/editor.js"></script>
+</body>
+</html>
