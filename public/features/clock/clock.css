@@ -1,0 +1,124 @@
+/* ===== 時鐘 ===== */
+/* safe center：內容放不下時從上方開始排、可捲動，不會切掉頂端 */
+.clock-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: safe center;
+    gap: 14px;
+    background: linear-gradient(180deg, #ffffff, #f3f4fb);
+}
+
+/* 指針時鐘 */
+.clock-face {
+    width: 220px;
+    height: 220px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 8px 18px rgba(60, 64, 110, 0.18));
+}
+
+.clock-dial {
+    fill: white;
+    stroke: #667eea;
+    stroke-width: 4;
+}
+
+.clock-mark {
+    stroke: #b8bcd6;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+}
+
+.clock-mark.hour {
+    stroke: #2d3047;
+    stroke-width: 3;
+}
+
+.clock-number {
+    font-size: 15px;
+    font-weight: 600;
+    fill: #2d3047;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+.clock-hand {
+    stroke-linecap: round;
+}
+
+.clock-hand.hour {
+    stroke: #2d3047;
+    stroke-width: 6;
+}
+
+.clock-hand.minute {
+    stroke: #2d3047;
+    stroke-width: 4;
+}
+
+.clock-hand.second {
+    stroke: #ff5f57;
+    stroke-width: 2;
+}
+
+.clock-center {
+    fill: #ff5f57;
+}
+
+/* 數字時間與日期 */
+.clock-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.clock-display {
+    font-size: 48px;
+    font-weight: 700;
+    color: #2d3047;
+    font-family: "SF Mono", Consolas, Monaco, monospace;
+    letter-spacing: 2px;
+    line-height: 1;
+}
+
+.clock-date {
+    font-size: 18px;
+    color: #6b7090;
+}
+
+.clock-sound-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 14px;
+    margin-top: 4px;
+    font-size: 13px;
+    color: #6b7090;
+}
+
+.clock-sound-options label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+/* 最大化：指針時鐘與數字左右並排並放大 */
+#clock-modal.maximized .clock-body {
+    flex-direction: row;
+    gap: 6vw;
+}
+
+/* 指針時鐘的大小由 clock.js 的 fitClockLayout() 依視窗大小調整 */
+#clock-modal.maximized .clock-display {
+    font-size: min(10vw, 14vh);
+}
+
+#clock-modal.maximized .clock-date {
+    font-size: min(3vw, 5vh);
+}
+
+#clock-modal.maximized .clock-sound-options {
+    font-size: min(1.6vw, 2.6vh);
+}
