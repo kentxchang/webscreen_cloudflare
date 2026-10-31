@@ -1,0 +1,17 @@
+name = "webscreen"
+main = "src/worker.js"
+compatibility_date = "2026-10-01"
+
+# 前端靜態檔案（public/index.html 載入 public/features/ 下各子功能）
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# 資料庫：Durable Object 內建 SQLite（免費方案可用，部署時自動建立，無需另外設定）
+[[durable_objects.bindings]]
+name = "SAVE_STORE"
+class_name = "SaveStore"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["SaveStore"]
