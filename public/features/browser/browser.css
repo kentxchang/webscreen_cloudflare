@@ -1,0 +1,53 @@
+/* ===== 網頁（管理圖層的共用樣式在 core/core.css 的 .manage-*） ===== */
+.web-add-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.web-add-row #web-add-url {
+    flex: 2;
+    min-width: 200px;
+}
+
+.web-add-row #web-add-name {
+    flex: 1;
+    min-width: 120px;
+}
+
+.web-embed summary {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.web-embed-code {
+    height: 70px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 12px;
+    resize: vertical;
+}
+
+.web-item-url {
+    font-size: 11px;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 放到畫面上的網頁視窗 */
+.modal.web-window .modal-content {
+    flex: 1;
+    padding: 0;
+    overflow: hidden;
+}
+
+.web-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    background: white;
+}
