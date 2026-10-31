@@ -1,0 +1,91 @@
+<!-- 啟動選擇圖層 -->
+<div class="startup-overlay" id="startup-overlay">
+    <div class="startup-panel">
+        <!-- 第一次使用：設定管理者密碼 -->
+        <div class="startup-view" id="startup-setup-view" style="display:none;">
+            <div class="startup-hero">
+                <div class="startup-logo">🔐</div>
+                <h1>設定管理者密碼</h1>
+                <p>第一次使用，請先設定管理者密碼。之後要編輯畫面、存檔都需要輸入這個密碼。</p>
+            </div>
+            <form class="startup-auth-form" onsubmit="submitSetup(event)">
+                <input type="password" class="startup-input" id="setup-password" placeholder="管理者密碼（至少 4 個字元）" autocomplete="new-password">
+                <input type="password" class="startup-input" id="setup-password-confirm" placeholder="再輸入一次密碼" autocomplete="new-password">
+                <div class="startup-auth-error" id="setup-error"></div>
+                <button type="submit" class="startup-primary-btn">✅ 設定密碼並開始使用</button>
+                <p class="startup-auth-note">請牢記這個密碼。</p>
+            </form>
+        </div>
+
+        <!-- 管理者登入 -->
+        <div class="startup-view" id="startup-login-view" style="display:none;">
+            <div class="startup-hero">
+                <div class="startup-logo">🏫</div>
+                <h1>教室大屏工具</h1>
+                <p>輸入管理者密碼後即可編輯與存檔</p>
+            </div>
+            <form class="startup-auth-form" onsubmit="submitLogin(event)">
+                <input type="password" class="startup-input" id="login-password" placeholder="管理者密碼" autocomplete="current-password">
+                <div class="startup-auth-error" id="login-error"></div>
+                <button type="submit" class="startup-primary-btn">🔑 登入</button>
+                <button type="button" class="startup-secondary-btn" id="login-cancel-btn" onclick="hideStartupChooser()">取消</button>
+                <div class="startup-guest" id="login-guest">
+                    <div class="startup-guest-divider"><span>或不登入，以唯讀模式</span></div>
+                    <div class="startup-guest-choices">
+                        <button type="button" class="startup-guest-btn" onclick="startNewScreen()">
+                            <span class="startup-guest-icon">✨</span>
+                            <span class="startup-guest-title">開新畫面</span>
+                        </button>
+                        <button type="button" class="startup-guest-btn" onclick="showStartupLoadView()">
+                            <span class="startup-guest-icon">📂</span>
+                            <span class="startup-guest-title">開啟舊存檔</span>
+                        </button>
+                    </div>
+                    <p class="startup-auth-note">唯讀模式可以使用畫面上的工具，但不能存檔、不能新增或刪除教材。</p>
+                </div>
+            </form>
+        </div>
+
+        <!-- 歡迎畫面 -->
+        <div class="startup-view" id="startup-choose-view">
+            <div class="startup-hero">
+                <div class="startup-logo">🏫</div>
+                <h1>教室大屏工具</h1>
+                <p>白板、計時、抽籤、PDF、網頁、投影⋯⋯上課需要的工具都在這裡</p>
+            </div>
+
+            <div class="startup-choices">
+                <button class="startup-choice" onclick="startNewScreen()">
+                    <span class="startup-choice-icon">✨</span>
+                    <span class="startup-choice-title">開新畫面</span>
+                    <span class="startup-choice-desc">從空白畫面開始這堂課</span>
+                </button>
+                <button class="startup-choice" onclick="showStartupLoadView()">
+                    <span class="startup-choice-icon">📂</span>
+                    <span class="startup-choice-title">開啟舊存檔</span>
+                    <span class="startup-choice-desc">繼續使用存在雲端的畫面</span>
+                </button>
+            </div>
+
+            <div class="startup-footer">
+                <div class="startup-author">Made by <a href="https://kentxchang.blogspot.tw" target="_blank" rel="noopener">阿剛老師</a></div>
+                <div class="startup-license">
+                    <a class="cc-badge" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant" target="_blank" rel="license noopener">CC BY-NC-SA 4.0</a>
+                    <span>本工具採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant" target="_blank" rel="license noopener">創用 CC 姓名標示－非商業性－相同方式分享 4.0 國際</a>授權。歡迎教學使用與改作，請標示作者「阿剛老師」、不得用於商業用途，改作後請以相同授權分享。</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 開啟舊存檔 -->
+        <div class="startup-view" id="startup-load-view" style="display:none;">
+            <div class="startup-load-header">
+                <button class="startup-back" onclick="startupBack()" title="返回">←</button>
+                <div>
+                    <h2>開啟舊存檔</h2>
+                    <p>點選要繼續使用的畫面</p>
+                </div>
+            </div>
+            <div class="startup-save-list" id="startup-save-list"></div>
+        </div>
+    </div>
+</div>
