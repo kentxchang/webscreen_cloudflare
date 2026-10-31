@@ -1,0 +1,52 @@
+<!-- 跑馬燈容器 -->
+<div class="marquee-container" id="marquee-container">
+    <div class="marquee-text" id="marquee-text"></div>
+</div>
+
+<!-- 跑馬燈設定 -->
+<div class="modal" id="marquee-modal" style="width:400px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('marquee-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">跑馬燈設定</div>
+    </div>
+    <div class="modal-content">
+        <div class="marquee-settings">
+            <label>
+                文字內容
+                <input type="text" id="marquee-input" placeholder="輸入跑馬燈文字..." value="歡迎使用教學工具！">
+            </label>
+            <label>
+                文字大小
+                <input type="number" id="marquee-size" value="48" min="20" max="200"> px
+            </label>
+            <label>
+                文字顏色
+                <input type="color" id="marquee-color" value="#ff0000">
+            </label>
+            <label>
+                捲動速度
+                <select id="marquee-speed">
+                    <option value="30">慢速</option>
+                    <option value="15" selected>中速</option>
+                    <option value="8">快速</option>
+                </select>
+            </label>
+            <label>
+                垂直位置
+                <select id="marquee-position">
+                    <option value="top">頂部</option>
+                    <option value="middle" selected>中間</option>
+                    <option value="bottom">底部</option>
+                </select>
+            </label>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:20px;justify-content:center;">
+            <button class="timer-btn timer-preset" onclick="startMarquee()">啟動</button>
+            <button class="timer-btn timer-action stop" onclick="stopMarquee()">停止</button>
+        </div>
+    </div>
+</div>
