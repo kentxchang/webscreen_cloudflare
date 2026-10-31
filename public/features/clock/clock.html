@@ -1,0 +1,31 @@
+<!-- 時鐘 -->
+<div class="modal" id="clock-modal" style="width:420px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('clock-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">時鐘</div>
+    </div>
+    <div class="modal-content clock-body">
+        <!-- 指針時鐘（刻度與數字由 clock.js 產生） -->
+        <svg class="clock-face" id="clock-face" viewBox="0 0 200 200">
+            <circle class="clock-dial" cx="100" cy="100" r="96"></circle>
+            <g id="clock-marks"></g>
+            <line class="clock-hand hour" id="clock-hour" x1="100" y1="108" x2="100" y2="52"></line>
+            <line class="clock-hand minute" id="clock-minute" x1="100" y1="112" x2="100" y2="30"></line>
+            <line class="clock-hand second" id="clock-second" x1="100" y1="118" x2="100" y2="22"></line>
+            <circle class="clock-center" cx="100" cy="100" r="5"></circle>
+        </svg>
+
+        <div class="clock-text">
+            <div class="clock-display" id="clock-display">00:00:00</div>
+            <div class="clock-date" id="clock-date"></div>
+            <div class="clock-sound-options">
+                <label><input type="checkbox" id="clock-chime" onchange="saveClockSoundOptions()"> 🔔 整點報時</label>
+                <label><input type="checkbox" id="clock-tick" onchange="saveClockSoundOptions()"> 🕐 秒針滴答聲</label>
+            </div>
+        </div>
+    </div>
+</div>
