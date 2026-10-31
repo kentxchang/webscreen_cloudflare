@@ -1,0 +1,15 @@
+<!-- 聚光燈遮罩 -->
+<div id="spotlight-overlay">
+    <div class="spotlight-hole rectangle" id="spotlight-hole">
+        <div class="spotlight-resize nw" data-dir="nw"></div>
+        <div class="spotlight-resize ne" data-dir="ne"></div>
+        <div class="spotlight-resize sw" data-dir="sw"></div>
+        <div class="spotlight-resize se" data-dir="se"></div>
+    </div>
+    <div class="spotlight-controls" id="spotlight-controls">
+        <button class="spotlight-shape-btn" onclick="setSpotlightShape('circle')">圓形</button>
+        <button class="spotlight-shape-btn active" onclick="setSpotlightShape('rectangle')">方形</button>
+        <button class="spotlight-shape-btn" onclick="setSpotlightShape('rounded')">圓角</button>
+        <button class="spotlight-shape-btn" onclick="toggleSpotlight()" style="background:#ff5f57;color:white;border-color:#ff5f57;">關閉</button>
+    </div>
+</div>
