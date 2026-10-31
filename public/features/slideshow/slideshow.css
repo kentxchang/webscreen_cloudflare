@@ -1,0 +1,107 @@
+/* ===== 依序呈現（管理圖層的共用樣式在 core/core.css 的 .manage-*） ===== */
+.slideshow-item-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.slideshow-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.slideshow-item.unchecked .manage-item-info {
+    opacity: 0.45;
+}
+
+.slideshow-item .manage-item-actions button {
+    background: #667eea;
+    min-width: 34px;
+}
+
+.slideshow-item .manage-item-actions button:disabled {
+    background: #ccc;
+    cursor: default;
+}
+
+/* 呈現中的物件：佔滿整個畫面，蓋過工具列與其他物件 */
+.modal.slideshow-current,
+.draggable-image-container.slideshow-current {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+    z-index: 10005 !important;
+}
+
+.draggable-image-container.slideshow-current {
+    background: rgba(0, 0, 0, 0.85);
+    cursor: default;
+}
+
+.draggable-image-container.slideshow-current .draggable-image {
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.draggable-image-container.slideshow-current .image-resize-handle,
+.draggable-image-container.slideshow-current .draggable-image-close,
+.modal.slideshow-current .resize-handle {
+    display: none;
+}
+
+/* 浮動的上一個／下一個按鈕（放右下角，避免擋住物件下方中央的按鈕與 PDF 工具列） */
+.slideshow-bar {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 10020;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(30, 30, 30, 0.85);
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    color: white;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.slideshow-bar.active {
+    display: flex;
+}
+
+.slideshow-bar button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.slideshow-bar button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.slideshow-bar button:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.slideshow-bar .slideshow-end {
+    background: #ff5f57;
+}
+
+.slideshow-info {
+    max-width: 25vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 6px;
+}
