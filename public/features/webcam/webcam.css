@@ -1,0 +1,44 @@
+/* ===== 實物投影 ===== */
+.webcam-container {
+    width: 100%;
+    height: 100%;
+    min-width: 320px;
+    min-height: 300px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#webcam-video {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    border-radius: 8px;
+    background: #000;
+    object-fit: contain;
+}
+
+.webcam-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.webcam-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* 左右鏡像 */
+#webcam-video.mirrored {
+    transform: scaleX(-1);
+}
+
+#mirror-btn.active {
+    background: #f0a020;
+}
