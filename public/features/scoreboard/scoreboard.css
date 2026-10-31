@@ -1,0 +1,53 @@
+/* ===== 計分板 ===== */
+.scoreboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 10px;
+}
+
+.score-group {
+    background: linear-gradient(145deg, #f8f8f8, #e8e8e8);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+}
+
+.group-name {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.group-score {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.score-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.score-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.score-btn.plus {
+    background: #28ca41;
+    color: white;
+}
+
+.score-btn.minus {
+    background: #ff5f57;
+    color: white;
+}
