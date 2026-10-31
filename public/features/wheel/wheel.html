@@ -1,0 +1,21 @@
+<!-- 幸運轉盤 -->
+<div class="modal" id="wheel-modal" style="width:450px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('wheel-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">幸運大轉盤</div>
+    </div>
+    <div class="modal-content">
+        <div class="wheel-container">
+            <canvas id="wheel-canvas" width="350" height="350"></canvas>
+            <div class="wheel-result" id="wheel-result"></div>
+            <div style="margin-top:15px;">
+                <input type="text" class="browser-url" id="wheel-options" placeholder="輸入選項，用逗號分隔" value="1,2,3,4,5,6">
+                <button class="timer-btn timer-preset" onclick="updateWheel()" style="margin-top:10px;">更新轉盤</button>
+            </div>
+        </div>
+    </div>
+</div>
