@@ -1,0 +1,60 @@
+/* ===== 待辦清單 ===== */
+.todo-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.todo-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.todo-text {
+    flex: 1;
+    font-size: 14px;
+}
+
+.todo-delete {
+    background: none;
+    border: none;
+    color: #ff5f57;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.todo-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.todo-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.todo-add-btn {
+    padding: 10px 20px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
