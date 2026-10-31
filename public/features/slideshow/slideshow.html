@@ -1,0 +1,26 @@
+<!-- 依序呈現：勾選畫面上的物件並排序（獨立圖層，不屬於畫面上的物件） -->
+<div class="manage-layer" id="slideshow-layer" onclick="if (event.target === this) closeSlideshowLayer()">
+    <div class="manage-layer-panel">
+        <div class="manage-layer-header">
+            <h2>依序呈現</h2>
+            <button class="manage-layer-close" onclick="closeSlideshowLayer()" title="關閉">×</button>
+        </div>
+
+        <div class="gas-settings-container">
+            <small style="color:#666;font-size:12px;">勾選要呈現的物件，用 ↑ ↓ 調整順序，再按「依序呈現」。物件會依序佔滿整個畫面，畫面下方有上一個、下一個按鈕。</small>
+            <div class="gas-input-group">
+                <label>畫面上的物件（已勾選 <span id="slideshow-count">0</span> 個）</label>
+                <div class="manage-list" id="slideshow-list" data-empty="畫面上目前沒有物件。請先開啟視窗，或放上圖片、PDF、網頁、HTML。"></div>
+            </div>
+            <button class="gas-btn gas-btn-success" onclick="startSlideshow()" style="width:100%;">▶ 依序呈現</button>
+        </div>
+    </div>
+</div>
+
+<!-- 依序呈現時的浮動按鈕 -->
+<div class="slideshow-bar" id="slideshow-bar">
+    <button id="slideshow-prev" onclick="slideshowStep(-1)">◀ 上一個</button>
+    <span class="slideshow-info" id="slideshow-info"></span>
+    <button id="slideshow-next" onclick="slideshowStep(1)">下一個 ▶</button>
+    <button class="slideshow-end" onclick="endSlideshow()" title="結束（Esc）">✕ 結束</button>
+</div>
