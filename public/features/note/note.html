@@ -1,0 +1,37 @@
+<!-- 文字便利貼管理圖層（獨立圖層，不屬於畫面上的物件） -->
+<div class="manage-layer" id="note-layer" onclick="if (event.target === this) closeNoteLayer()">
+    <div class="manage-layer-panel">
+        <div class="manage-layer-header">
+            <h2>文字便利貼管理</h2>
+            <button class="manage-layer-close" onclick="closeNoteLayer()" title="關閉">×</button>
+        </div>
+
+        <div class="gas-settings-container">
+            <div class="gas-input-group edit-only">
+                <label id="note-form-title">新增便利貼</label>
+                <textarea class="gas-input note-text-input" id="note-text" placeholder="輸入便利貼內容（可多行）..."></textarea>
+                <div class="note-options">
+                    <label class="note-option">字體大小
+                        <input type="number" class="gas-input" id="note-font-size" min="12" max="200" value="36">
+                        <span>px</span>
+                    </label>
+                    <div class="note-option">顏色
+                        <div class="note-swatches" id="note-swatches"></div>
+                        <input type="color" id="note-color" value="#fff59d" title="自訂顏色" onchange="selectNoteColor(this.value)">
+                    </div>
+                </div>
+                <div class="note-form-actions">
+                    <button class="gas-btn gas-btn-success" id="note-submit-btn" onclick="submitNote()">＋ 新增便利貼</button>
+                    <button class="gas-btn" id="note-cancel-btn" onclick="resetNoteForm()" style="display:none;">取消修改</button>
+                </div>
+            </div>
+
+            <div class="gas-input-group">
+                <label>已建立的便利貼（<span id="note-item-count">0</span>）</label>
+                <div class="manage-list" id="note-item-list" data-empty="尚未建立便利貼"></div>
+            </div>
+            <div class="manage-status" id="note-status"></div>
+            <small style="color:#666;font-size:11px;">便利貼存在目前畫面的雲端存檔中。「放到畫面」以視窗呈現在畫面上，可拖曳、縮放；「修改」會載入上方表單，修改內容、字體大小或顏色後畫面上的便利貼會一起更新。</small>
+        </div>
+    </div>
+</div>
