@@ -1,0 +1,24 @@
+<!-- 實物投影 -->
+<div class="modal" id="webcam-modal" style="width:700px;height:520px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('webcam-modal');stopWebcam()"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">實物投影</div>
+    </div>
+    <div class="modal-content webcam-container">
+        <div class="webcam-controls">
+            <button class="webcam-btn timer-preset" onclick="startWebcam()" title="重新啟動攝影機">開始</button>
+            <select id="camera-select" class="settings-select" style="width:auto;" onchange="switchCamera()">
+                <!-- 動態生成 -->
+            </select>
+            <button class="webcam-btn timer-preset" onclick="toggleWebcamMirror()" id="mirror-btn" title="畫面左右翻轉">↔ 鏡像</button>
+            <button class="webcam-btn timer-preset" onclick="toggleFreeze()" id="freeze-btn">凍結</button>
+            <button class="webcam-btn timer-preset" onclick="captureWebcam()">截圖</button>
+        </div>
+        <video id="webcam-video" autoplay playsinline></video>
+        <canvas id="webcam-canvas" style="display:none;"></canvas>
+    </div>
+</div>
