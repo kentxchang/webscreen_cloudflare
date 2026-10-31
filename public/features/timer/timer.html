@@ -1,0 +1,41 @@
+<!-- 計時器 -->
+<div class="modal" id="timer-modal" style="width:420px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('timer-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">計時器</div>
+    </div>
+    <div class="modal-content timer-body">
+        <!-- 倒數進度環 -->
+        <div class="timer-ring-wrap">
+            <svg class="timer-ring" viewBox="0 0 200 200">
+                <circle class="timer-ring-bg" cx="100" cy="100" r="90"></circle>
+                <circle class="timer-ring-progress" id="timer-ring-progress" cx="100" cy="100" r="90"></circle>
+            </svg>
+            <div class="timer-center">
+                <div class="timer-display" id="timer-display">00:00</div>
+                <div class="timer-status" id="timer-status">選擇時間後按開始</div>
+            </div>
+        </div>
+
+        <div class="timer-presets">
+            <button class="timer-chip" onclick="setTimer(60)">1 分</button>
+            <button class="timer-chip" onclick="setTimer(180)">3 分</button>
+            <button class="timer-chip" onclick="setTimer(300)">5 分</button>
+            <button class="timer-chip" onclick="setTimer(600)">10 分</button>
+            <span class="timer-custom">
+                <input type="number" class="timer-custom-input" id="custom-timer" placeholder="秒" min="1">
+                <button class="timer-chip" onclick="setCustomTimer()">自訂</button>
+            </span>
+        </div>
+
+        <div class="timer-actions">
+            <button class="timer-main-btn" id="timer-start" onclick="toggleTimer()">▶ 開始</button>
+            <button class="timer-icon-btn" onclick="resetTimer()" title="重置到設定的時間">↺</button>
+            <button class="timer-icon-btn" id="timer-sound-btn" onclick="toggleTimerSound()" title="音效：開">🔔</button>
+        </div>
+    </div>
+</div>
