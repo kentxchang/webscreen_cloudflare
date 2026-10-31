@@ -1,0 +1,17 @@
+<!-- 硬幣 -->
+<div class="modal" id="coin-modal" style="width:300px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('coin-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">拋硬幣</div>
+    </div>
+    <div class="modal-content">
+        <div class="coin-container">
+            <div class="coin heads" id="coin">正</div>
+            <button class="timer-btn timer-preset" onclick="flipCoin()">拋硬幣</button>
+        </div>
+    </div>
+</div>
