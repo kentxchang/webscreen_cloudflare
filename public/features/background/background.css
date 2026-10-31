@@ -1,0 +1,40 @@
+/* ===== 教學底圖 ===== */
+.grid-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.grid-btn {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    background: white;
+}
+
+.grid-btn.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+/* ===== 背景 iframe ===== */
+#bg-iframe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    z-index: -1;
+    pointer-events: none;
+    display: none;
+}
+
+#bg-iframe.active {
+    display: block;
+    z-index: 50;
+    pointer-events: auto;
+}
