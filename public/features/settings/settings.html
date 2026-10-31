@@ -1,0 +1,71 @@
+<!-- 設定 -->
+<div class="modal" id="settings-modal" style="width:460px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('settings-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">設定</div>
+    </div>
+    <div class="modal-content">
+        <div class="settings-group edit-only">
+            <label class="settings-label">管理者</label>
+            <div class="admin-status">
+                <span>目前身分：<strong id="auth-role-text">管理者</strong></span>
+                <button class="gas-btn" style="background:#eee;" onclick="logoutFromSettings()">登出</button>
+            </div>
+            <div class="master-only admin-password-form">
+                <small style="color:#666;font-size:11px;">修改管理者密碼：</small>
+                <input type="password" class="gas-input" id="new-admin-password" placeholder="新的管理者密碼（至少 4 個字元）" autocomplete="new-password">
+                <input type="password" class="gas-input" id="new-admin-password-confirm" placeholder="再輸入一次" autocomplete="new-password">
+                <button class="gas-btn gas-btn-primary" onclick="changeAdminPassword()">修改管理者密碼</button>
+                <div id="admin-password-status" style="font-size:12px;"></div>
+            </div>
+        </div>
+        <div class="settings-group">
+            <label class="settings-label">工具列位置</label>
+            <select class="settings-select" id="toolbar-position" onchange="setToolbarPosition()">
+                <option value="left">靠左</option>
+                <option value="right">靠右</option>
+                <option value="bottom">置底</option>
+            </select>
+        </div>
+        <div class="settings-group">
+            <label class="settings-label" style="display:flex;align-items:center;gap:8px;">
+                <input type="checkbox" id="sidebar-autohide" checked onchange="setAutoHideSetting()">
+                自動隱藏工具列
+            </label>
+            <small style="color:#666;font-size:11px;">不使用時工具列縮到畫面邊緣，滑鼠移過去或點一下就會展開。</small>
+        </div>
+        <div class="settings-group">
+            <label class="settings-label">預設畫筆顏色</label>
+            <select class="settings-select" id="default-color" onchange="setDefaultColor()">
+                <option value="#ff0000">紅色</option>
+                <option value="#00ff00">綠色</option>
+                <option value="#0000ff">藍色</option>
+                <option value="#ffff00">黃色</option>
+            </select>
+        </div>
+        <div class="settings-group">
+            <label class="settings-label">自動雲端存檔</label>
+            <select class="settings-select" id="autosave-interval" onchange="setAutoSave()">
+                <option value="0">關閉</option>
+                <option value="1">每 1 分鐘</option>
+                <option value="2" selected>每 2 分鐘</option>
+                <option value="5">每 5 分鐘</option>
+                <option value="10">每 10 分鐘</option>
+            </select>
+            <small style="color:#666;font-size:11px;">只有畫面有變更時才存檔。已開啟雲端存檔時更新該存檔；新畫面會自動建立「自動存檔 日期時間」。</small>
+        </div>
+        <div class="settings-group">
+            <label class="settings-label">資料庫使用空間</label>
+            <div class="storage-usage" id="storage-usage">
+                <div class="storage-total-text" id="storage-total-text">開啟設定時自動讀取</div>
+                <div class="storage-bar"><div class="storage-bar-fill" id="storage-total-bar"></div></div>
+                <div class="storage-list" id="storage-list"></div>
+                <button class="gas-btn gas-btn-primary" onclick="loadStorageUsage()" style="width:100%;">重新整理</button>
+            </div>
+        </div>
+    </div>
+</div>
