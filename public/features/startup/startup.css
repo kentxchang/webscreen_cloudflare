@@ -1,0 +1,451 @@
+/* ===== 啟動選擇圖層 ===== */
+.startup-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(102, 126, 234, 0.55), rgba(20, 20, 40, 0.85));
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99990;
+    padding: 16px;
+}
+
+.startup-overlay.active {
+    display: flex;
+}
+
+.startup-panel {
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    width: 600px;
+    max-width: 100%;
+    max-height: 92vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: startup-pop 0.35s ease;
+}
+
+@keyframes startup-pop {
+    from { transform: translateY(16px) scale(0.97); opacity: 0; }
+    to { transform: none; opacity: 1; }
+}
+
+.startup-view {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* 歡迎畫面上方的標題區 */
+.startup-hero {
+    padding: 32px 28px 26px;
+    text-align: center;
+    color: white;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.startup-logo {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 12px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
+.startup-hero h1 {
+    margin: 0;
+    font-size: 30px;
+    letter-spacing: 2px;
+}
+
+.startup-hero p {
+    margin: 8px 0 0;
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* 兩個選項卡片 */
+.startup-choices {
+    display: flex;
+    gap: 16px;
+    padding: 24px 28px 8px;
+}
+
+.startup-choice {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 22px 12px;
+    border: 2px solid #e6e8f2;
+    border-radius: 18px;
+    background: #fafbff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.startup-choice:hover {
+    border-color: #667eea;
+    background: #f0f1ff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(102, 126, 234, 0.25);
+}
+
+.startup-choice-icon {
+    font-size: 44px;
+}
+
+.startup-choice-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2d3047;
+}
+
+.startup-choice-desc {
+    font-size: 13px;
+    color: #8a8fa8;
+}
+
+/* 作者與授權 */
+.startup-footer {
+    padding: 16px 28px 22px;
+    text-align: center;
+    font-size: 12px;
+    color: #8a8fa8;
+    line-height: 1.6;
+}
+
+.startup-footer a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.startup-footer a:hover {
+    text-decoration: underline;
+}
+
+.startup-author {
+    font-size: 14px;
+    color: #4a4f6a;
+    margin-bottom: 8px;
+}
+
+.startup-author a {
+    font-weight: 700;
+}
+
+.startup-license {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    text-align: left;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: #f6f7fb;
+}
+
+.startup-footer .cc-badge {
+    flex-shrink: 0;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: #2d3047;
+    color: white;
+    font-weight: 700;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.startup-footer .cc-badge:hover {
+    text-decoration: none;
+    background: #667eea;
+}
+
+/* 開啟舊存檔 */
+.startup-load-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 24px 16px;
+    color: white;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.startup-load-header h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.startup-load-header p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+.startup-back {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.startup-back:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.startup-save-list {
+    padding: 16px 20px 20px;
+    overflow-y: auto;
+    max-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.startup-save-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid #e6e8f2;
+    border-radius: 14px;
+    background: white;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+}
+
+.startup-save-card:hover {
+    border-color: #667eea;
+    background: #f6f7ff;
+    transform: translateX(3px);
+}
+
+.startup-save-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #eef0ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.startup-save-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.startup-save-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3047;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.startup-save-date {
+    margin-top: 2px;
+    font-size: 12px;
+    color: #8a8fa8;
+}
+
+.startup-save-arrow {
+    font-size: 22px;
+    color: #b8bcd6;
+}
+
+/* 載入中、沒有存檔、錯誤 */
+.startup-save-message {
+    padding: 36px 16px;
+    text-align: center;
+    color: #8a8fa8;
+    font-size: 14px;
+}
+
+.startup-save-message .big {
+    display: block;
+    font-size: 44px;
+    margin-bottom: 8px;
+}
+
+.startup-save-message.error {
+    color: #e5484d;
+}
+
+.startup-save-message .gas-btn {
+    margin-top: 14px;
+}
+
+.startup-spinner {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 12px;
+    border: 4px solid #e6e8f2;
+    border-top-color: #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@media (max-width: 520px) {
+    .startup-choices {
+        flex-direction: column;
+    }
+}
+
+/* 設定密碼與登入 */
+.startup-auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px 28px 26px;
+}
+
+.startup-input {
+    padding: 14px 16px;
+    border: 2px solid #e6e8f2;
+    border-radius: 14px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.startup-input:focus {
+    border-color: #667eea;
+}
+
+.startup-primary-btn,
+.startup-secondary-btn {
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.startup-primary-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.35);
+}
+
+.startup-primary-btn:hover {
+    transform: translateY(-1px);
+}
+
+.startup-primary-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.startup-secondary-btn {
+    background: #f3f4fb;
+    color: #4a4f6a;
+}
+
+.startup-secondary-btn:hover {
+    background: #e8e9f5;
+}
+
+.startup-auth-error {
+    min-height: 18px;
+    color: #e5484d;
+    font-size: 13px;
+}
+
+.startup-auth-error:empty {
+    min-height: 0;
+}
+
+.startup-auth-note {
+    margin: 0;
+    font-size: 12px;
+    color: #8a8fa8;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* 登入畫面：不登入時的唯讀模式選擇（左右兩個按鈕） */
+.startup-guest {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.startup-guest-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8a8fa8;
+    font-size: 13px;
+}
+
+.startup-guest-divider::before,
+.startup-guest-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e6e8f2;
+}
+
+.startup-guest-choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.startup-guest-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 10px;
+    border: 2px solid #e6e8f2;
+    border-radius: 16px;
+    background: #f8f9fe;
+    color: #4a4f6a;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.startup-guest-btn:hover {
+    border-color: #667eea;
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.18);
+}
+
+.startup-guest-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.14), rgba(118, 75, 162, 0.14));
+    font-size: 24px;
+}
+
+.startup-guest-title {
+    font-size: 15px;
+    font-weight: 600;
+}
