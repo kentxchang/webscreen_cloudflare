@@ -1,0 +1,25 @@
+<!-- 骰子 -->
+<div class="modal" id="dice-modal" style="width:400px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('dice-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">擲骰子</div>
+    </div>
+    <div class="modal-content">
+        <div class="dice-container" id="dice-container">
+            <div class="dice">⚀</div>
+        </div>
+        <div style="text-align:center;margin-top:15px;">
+            <label>骰子數量：</label>
+            <select id="dice-count" onchange="updateDiceCount()">
+                <option value="1">1顆</option>
+                <option value="2">2顆</option>
+                <option value="3">3顆</option>
+            </select>
+            <button class="timer-btn timer-preset" onclick="rollDice()" style="margin-left:10px;">擲骰子</button>
+        </div>
+    </div>
+</div>
