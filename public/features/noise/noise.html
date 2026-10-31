@@ -1,0 +1,18 @@
+<!-- 噪音偵測器 -->
+<div class="modal" id="noise-modal" style="width:300px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('noise-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">噪音偵測器</div>
+    </div>
+    <div class="modal-content">
+        <div class="noise-meter">
+            <div class="noise-light green" id="noise-light"></div>
+            <div class="noise-level" id="noise-level">安靜</div>
+            <button class="timer-btn timer-preset" onclick="toggleNoiseMeter()" id="noise-toggle">開始偵測</button>
+        </div>
+    </div>
+</div>
