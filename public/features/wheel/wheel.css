@@ -1,0 +1,17 @@
+/* ===== 幸運轉盤 ===== */
+.wheel-container {
+    text-align: center;
+    padding: 20px;
+}
+
+#wheel-canvas {
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.wheel-result {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #333;
+}
