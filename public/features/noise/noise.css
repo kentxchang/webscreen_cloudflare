@@ -1,0 +1,38 @@
+/* ===== 噪音偵測器 ===== */
+.noise-meter {
+    text-align: center;
+    padding: 20px;
+}
+
+.noise-light {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 20px auto;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.noise-light.green {
+    background: radial-gradient(circle, #4ade80, #22c55e);
+}
+
+.noise-light.yellow {
+    background: radial-gradient(circle, #fbbf24, #f59e0b);
+}
+
+.noise-light.red {
+    background: radial-gradient(circle, #f87171, #ef4444);
+    animation: glow 0.5s infinite;
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.5); }
+    50% { box-shadow: 0 0 60px rgba(239, 68, 68, 0.8); }
+}
+
+.noise-level {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
