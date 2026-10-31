@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Classroom Dashboard All-in-One v2.0</title>
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <script>
+        // ===== 子功能清單 =====
+        // 每個子功能放在 features/<名稱>/ 資料夾，內含 <名稱>.html（畫面）、<名稱>.css（樣式）、<名稱>.js（程式）
+        // 要修改某個子功能，只需編輯對應資料夾；新增子功能則建立資料夾並加入此清單
+        // 側邊欄按鈕統一在 features/core/core.html
+        const FEATURES = [
+            'core',          // 共用：側邊欄、視窗系統、載入動畫、共用樣式、初始化
+            'auth',          // 管理者登入與唯讀模式
+            'whiteboard',    // 畫筆與白板工具列
+            'background',    // 背景設定（底圖、背景圖片、網頁背景）
+            'spotlight',     // 聚光燈
+            'marquee',       // 跑馬燈
+            'clock',         // 時鐘
+            'timer',         // 計時器
+            'scoreboard',    // 計分板
+            'noise',         // 噪音偵測
+            'todo',          // 待辦清單
+            'note',          // 文字便利貼
+            'lottery',       // 抽籤
+            'wheel',         // 轉盤
+            'dice',          // 骰子
+            'coin',          // 硬幣
+            'browser',       // 網頁
+            'pdf',           // PDF 閱讀器
+            'image',         // 圖片
+            'html-upload',   // 上傳 HTML
+            'mindmap',       // 心智圖
+            'slideshow',     // 依序呈現畫面上的物件
+            'webcam',        // 實物投影
+            'recorder',      // 螢幕錄影
+            'settings',      // 設定
+            'export-import', // 匯出/匯入 JSON
+            'cloud',         // 雲端存檔/讀檔/分享
+            'startup'        // 開啟時的選擇圖層
+        ];
+
+        (async function loadFeatures() {
+            const base = 'features/';
+            const fileUrl = (name, ext) => base + name + '/' + name + (ext ? '.' + ext : '');
+
+            // 1. 樣式與畫面同時下載
+            // 畫面檔用不含 .html 的網址，避免 Cloudflare 先回應一次轉址
+            const cssLoaded = Promise.all(FEATURES.map(name => new Promise(resolve => {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = fileUrl(name, 'css');
+                link.onload = link.onerror = resolve;
+                document.head.appendChild(link);
+            })));
+            const htmlOrder = FEATURES.filter(n => n !== 'core').concat('core');
+            const htmlsLoaded = Promise.all(htmlOrder.map(name =>
+                fetch(fileUrl(name)).then(r => r.ok ? r.text() : '')
+            ));
+            const [, htmls] = await Promise.all([cssLoaded, htmlsLoaded]);
+
+            // 2. 畫面（core 放最後，讓側邊欄、版權資訊維持在最上層）
+            htmls.forEach(html => document.body.insertAdjacentHTML('beforeend', html));
+
+            // 3. 程式：同時下載，依清單順序執行（async = false）
+            await Promise.all(FEATURES.map(name => new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = fileUrl(name, 'js');
+                script.async = false;
+                script.onload = resolve;
+                script.onerror = () => reject(new Error('無法載入 ' + script.src));
+                document.body.appendChild(script);
+            })));
+
+            initApp();
+        })().catch(error => alert('程式載入失敗：' + error.message));
+    </script>
+</body>
+</html>
