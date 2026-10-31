@@ -1,0 +1,20 @@
+<!-- 待辦清單 -->
+<div class="modal" id="todo-modal" style="width:400px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('todo-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">待辦清單</div>
+    </div>
+    <div class="modal-content">
+        <div class="todo-input-group">
+            <input type="text" class="todo-input" id="todo-input" placeholder="輸入待辦事項...">
+            <button class="todo-add-btn" onclick="addTodo()">新增</button>
+        </div>
+        <div class="todo-list" id="todo-list">
+            <!-- 動態生成 -->
+        </div>
+    </div>
+</div>
