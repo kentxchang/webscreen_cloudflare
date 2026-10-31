@@ -1,0 +1,88 @@
+<!-- 分享視窗 -->
+<div class="modal" id="share-modal" style="width:450px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('share-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">分享連結</div>
+    </div>
+    <div class="modal-content">
+        <div class="gas-settings-container">
+            <div class="gas-input-group">
+                <label>分享目前畫面（雲端存檔）的獨立網址與 QR Code</label>
+                <small style="color:#666;font-size:11px;">產生前會先把目前畫面更新到雲端存檔；開啟連結會直接載入此存檔。</small>
+                <button class="gas-btn gas-btn-primary" onclick="generateShareLink()" style="width:100%;">產生分享連結</button>
+            </div>
+            <div class="qr-section" id="qr-section" style="display:none;">
+                <img id="qr-code-img" class="qr-code-img" src="" alt="QR Code">
+
+                <div style="margin-top:10px;">
+                    <label style="font-size:12px;color:#666;display:block;margin-bottom:5px;">短網址</label>
+                    <input type="text" class="share-url-input" id="share-url" readonly onclick="this.select()">
+                    <button class="gas-btn gas-btn-primary" onclick="copyShareUrl()" style="margin-top:5px;width:100%;">複製短網址</button>
+                </div>
+
+                <div style="margin-top:15px;">
+                    <label style="font-size:12px;color:#666;display:block;margin-bottom:5px;">原始連結</label>
+                    <textarea class="share-url-input" id="original-url" readonly onclick="this.select()" style="height:80px;resize:vertical;font-family:monospace;font-size:11px;"></textarea>
+                    <button class="gas-btn gas-btn-primary" onclick="copyOriginalUrl()" style="margin-top:5px;width:100%;">複製原始連結</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 雲端存檔視窗 -->
+<div class="modal" id="cloud-save-modal" style="width:400px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('cloud-save-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">雲端存檔</div>
+    </div>
+    <div class="modal-content">
+        <div class="gas-settings-container">
+            <div class="gas-input-group" id="cloud-current-save-group" style="display:none;">
+                <label style="display:flex;align-items:center;gap:8px;">
+                    <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">目前存檔：<span id="cloud-current-save-name"></span></span>
+                    <button class="gas-btn-rename" onclick="cloudRename(currentSaveId, currentSaveName)" title="修改目前存檔的名稱">改名</button>
+                </label>
+                <button class="gas-btn gas-btn-primary" onclick="cloudUpdate()" style="width:100%;">更新目前存檔</button>
+                <hr style="border:none;border-top:1px solid #eee;margin:10px 0 0;width:100%;">
+            </div>
+            <div class="gas-input-group">
+                <label>另存新檔名稱</label>
+                <input type="text" class="gas-input" id="cloud-save-name" placeholder="輸入存檔名稱...">
+            </div>
+            <button class="gas-btn gas-btn-success" onclick="cloudSave()" style="width:100%;">另存新檔到雲端</button>
+            <div id="cloud-save-status" style="text-align:center;margin-top:10px;font-size:13px;color:#666;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 雲端讀檔視窗 -->
+<div class="modal" id="cloud-load-modal" style="width:500px;">
+    <div class="modal-header">
+        <div class="window-controls">
+            <button class="window-btn close" onclick="closeModal('cloud-load-modal')"></button>
+            <button class="window-btn minimize" onclick="minimizeModal(this)"></button>
+            <button class="window-btn maximize" onclick="maximizeModal(this)"></button>
+        </div>
+        <div class="modal-title">雲端讀檔</div>
+    </div>
+    <div class="modal-content">
+        <div class="gas-settings-container">
+            <button class="gas-btn gas-btn-primary" onclick="refreshCloudList()" style="width:100%;">重新整理清單</button>
+            <div class="cloud-save-list" id="cloud-save-list">
+                <div style="text-align:center;padding:20px;color:#999;">點選「重新整理清單」載入存檔</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 自動雲端存檔狀態 -->
+<div class="autosave-indicator" id="autosave-indicator"></div>
