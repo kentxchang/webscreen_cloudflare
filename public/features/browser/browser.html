@@ -1,0 +1,37 @@
+<!-- 網頁管理圖層（獨立圖層，不屬於畫面上的物件；畫面上的網頁視窗由 browser.js 動態建立） -->
+<div class="manage-layer" id="web-layer" onclick="if (event.target === this) closeWebLayer()">
+    <div class="manage-layer-panel">
+        <div class="manage-layer-header">
+            <h2>網頁管理</h2>
+            <button class="manage-layer-close" onclick="closeWebLayer()" title="關閉">×</button>
+        </div>
+
+        <div class="gas-settings-container">
+            <div class="gas-input-group edit-only">
+                <label>輸入網址（YouTube 網址會自動轉成可嵌入的格式）</label>
+                <div class="web-add-row">
+                    <input type="text" class="gas-input" id="web-add-url" placeholder="https://...">
+                    <input type="text" class="gas-input" id="web-add-name" placeholder="名稱（可留空）">
+                    <button class="gas-btn gas-btn-success" onclick="addWebFromUrl()">加入</button>
+                </div>
+            </div>
+
+            <details class="web-embed edit-only">
+                <summary>或貼上 iframe 嵌入碼</summary>
+                <div class="gas-input-group" style="margin-top:10px;">
+                    <input type="text" class="gas-input" id="web-embed-name" placeholder="名稱（可留空）">
+                    <textarea class="gas-input web-embed-code" id="web-embed-code" placeholder="貼上 <iframe src=&quot;...&quot;></iframe>"></textarea>
+                    <button class="gas-btn gas-btn-success" onclick="addWebFromEmbed()">加入</button>
+                </div>
+            </details>
+
+            <div class="manage-status" id="web-status"></div>
+
+            <div class="gas-input-group">
+                <label>已加入的網頁（<span id="web-item-count">0</span>）</label>
+                <div class="manage-list" id="web-item-list" data-empty="尚未加入網頁"></div>
+            </div>
+            <small style="color:#666;font-size:11px;">網頁清單存在目前畫面的雲端存檔中。「放到畫面」以視窗呈現，可同時放多個。部分網站（例如 Google、Facebook）不允許被嵌入，視窗會顯示空白或拒絕連線，這時可按「新分頁」開啟。</small>
+        </div>
+    </div>
+</div>
