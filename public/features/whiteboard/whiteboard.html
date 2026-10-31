@@ -1,0 +1,47 @@
+<!-- 繪圖畫布層 -->
+<div id="canvas-container">
+    <canvas id="drawing-canvas"></canvas>
+</div>
+
+<!-- 白板工具列 -->
+<div class="canvas-toolbar" id="canvas-toolbar">
+    <div class="tool-group">
+        <button class="tool-btn active" data-tool="pen" onclick="setTool('pen')">✏️</button>
+        <button class="tool-btn" data-tool="eraser" onclick="setTool('eraser')">🧽</button>
+        <div class="tool-group stamp-wrapper">
+            <button class="tool-btn" data-tool="stamp" onclick="setTool('stamp')">📌</button>
+            <div class="stamp-popup" id="stamp-popup">
+                <button class="stamp-btn active" data-stamp="✓" onclick="setStamp('✓')">✓</button>
+                <button class="stamp-btn" data-stamp="😊" onclick="setStamp('😊')">😊</button>
+                <button class="stamp-btn" data-stamp="⭐" onclick="setStamp('⭐')">⭐</button>
+                <button class="stamp-btn" data-stamp="💯" onclick="setStamp('💯')">💯</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tool-group">
+        <button class="color-btn active" style="background:#ff0000;" data-color="#ff0000" onclick="setColor('#ff0000')"></button>
+        <button class="color-btn" style="background:#00ff00;" data-color="#00ff00" onclick="setColor('#00ff00')"></button>
+        <button class="color-btn" style="background:#0000ff;" data-color="#0000ff" onclick="setColor('#0000ff')"></button>
+        <button class="color-btn" style="background:#ffff00;" data-color="#ffff00" onclick="setColor('#ffff00')"></button>
+    </div>
+
+    <div class="tool-group">
+        <button class="size-btn" data-size="thin" onclick="setSize(2)"></button>
+        <button class="size-btn active" data-size="medium" onclick="setSize(5)"></button>
+        <button class="size-btn" data-size="thick" onclick="setSize(10)"></button>
+        <button class="size-btn" data-size="super" onclick="setSize(20)"></button>
+    </div>
+
+    <div class="tool-group">
+        <button class="tool-btn" onclick="clearCanvas()">🗑️</button>
+        <button class="tool-btn" onclick="saveCanvas()">💾</button>
+    </div>
+
+    <div class="tool-group">
+        <label style="font-size:12px;display:flex;align-items:center;gap:4px;">
+            <input type="checkbox" id="palm-rejection" onchange="togglePalmRejection()">
+            僅筆
+        </label>
+    </div>
+</div>
