@@ -1,0 +1,25 @@
+<!-- 圖片管理圖層（獨立圖層，不屬於畫面上的物件；畫面上的圖片由 image.js 動態建立） -->
+<div class="manage-layer" id="image-layer" onclick="if (event.target === this) closeImageLayer()">
+    <div class="manage-layer-panel" id="image-layer-panel">
+        <div class="manage-layer-header">
+            <h2>圖片管理</h2>
+            <button class="manage-layer-close" onclick="closeImageLayer()" title="關閉">×</button>
+        </div>
+
+        <div class="gas-settings-container">
+            <div class="gas-input-group edit-only">
+                <label>上傳圖片（可一次選多張，也可以直接把檔案拖曳到這裡）</label>
+                <input type="file" id="image-upload-file" accept="image/*" multiple style="display:none" onchange="uploadImageFiles(event)">
+                <button class="gas-btn gas-btn-primary" onclick="document.getElementById('image-upload-file').click()">🖼️ 選擇圖片</button>
+            </div>
+
+            <div class="manage-status" id="image-status"></div>
+
+            <div class="gas-input-group">
+                <label>已上傳的圖片（<span id="image-item-count">0</span> 張，共約 <span id="image-total-size">0 B</span>）</label>
+                <div class="manage-list" id="image-item-list" data-empty="尚未上傳圖片"></div>
+            </div>
+            <small style="color:#666;font-size:11px;">圖片存在目前畫面的雲端存檔中。超過 1920 像素或 1 MB 的圖片會自動縮小並轉成 JPEG，以節省資料庫空間。放到畫面上的圖片可拖曳、拉角落縮放，按右上角 × 會從畫面移除（仍保留在清單中）。</small>
+        </div>
+    </div>
+</div>
