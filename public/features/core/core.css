@@ -1,0 +1,1011 @@
+/* ===== 全域樣式 ===== */
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+input, textarea {
+    user-select: text;
+    -webkit-user-select: text;
+    touch-action: auto;
+}
+
+/* ===== 懸浮側邊欄 ===== */
+.sidebar {
+    position: fixed;
+    top: 10px;
+    bottom: 10px;
+    z-index: 10002;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    cursor: grab;
+    user-select: none;
+}
+
+.sidebar:active {
+    cursor: grabbing;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+    height: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.5);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.7);
+}
+
+.sidebar.bottom::-webkit-scrollbar {
+    height: 8px;
+}
+
+.sidebar.left {
+    left: 10px;
+}
+
+.sidebar.right {
+    right: 10px;
+}
+
+.sidebar.bottom {
+    top: auto;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+    flex-wrap: nowrap;
+    max-width: 90%;
+    width: auto;
+    max-height: none;
+    justify-content: flex-start;
+    overflow-y: visible;
+    overflow-x: auto;
+}
+
+.sidebar.collapsed {
+    padding: 8px;
+}
+
+.sidebar.collapsed .sidebar-item:not(.toggle-item) {
+    display: none;
+}
+
+.sidebar.collapsed .section-divider {
+    display: none;
+}
+
+.sidebar.hidden {
+    display: none;
+}
+
+.sidebar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.sidebar.bottom .sidebar-item {
+    flex-direction: column;
+}
+
+.sidebar-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-btn:hover {
+    transform: scale(1.15);
+}
+
+.sidebar-btn:active {
+    transform: scale(0.95);
+}
+
+.sidebar-btn.active {
+    background: rgba(102, 126, 234, 0.2);
+    border-radius: 10px;
+}
+
+.sidebar-label {
+    font-size: 9px;
+    color: #666;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.sidebar-item.active .sidebar-label {
+    color: #667eea;
+    font-weight: bold;
+}
+
+.toggle-btn {
+    font-size: 12px;
+}
+
+.sidebar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 10px;
+    margin: 2px 0;
+}
+
+.sidebar.bottom .sidebar-section {
+    flex-direction: row;
+    flex-shrink: 0;
+}
+
+.sidebar.bottom .sidebar-item {
+    flex-shrink: 0;
+}
+
+/* 各分類背景色 */
+.sidebar-section.whiteboard {
+    background: rgba(102, 126, 234, 0.15);
+}
+
+.sidebar-section.classroom {
+    background: rgba(40, 202, 65, 0.15);
+}
+
+.sidebar-section.games {
+    background: rgba(255, 189, 46, 0.15);
+}
+
+.sidebar-section.resources {
+    background: rgba(69, 183, 209, 0.15);
+}
+
+.sidebar-section.media {
+    background: rgba(221, 160, 221, 0.15);
+}
+
+.sidebar-section.settings {
+    background: rgba(150, 150, 150, 0.15);
+}
+
+.section-divider {
+    display: none;
+}
+
+/* 版權信息 */
+.credit {
+    position: fixed;
+    bottom: 10px;
+    right: 15px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+    z-index: 50;
+}
+
+.credit a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+}
+
+.credit a:hover {
+    text-decoration: underline;
+}
+
+/* ===== 視窗化系統 (macOS 風格) ===== */
+.modal {
+    position: fixed;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    display: none;
+    flex-direction: column;
+    min-width: 300px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow: hidden;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal.minimized {
+    width: auto !important;
+    height: auto !important;
+    min-width: 200px !important;
+}
+
+.modal.minimized .modal-content {
+    display: none;
+}
+
+.modal.maximized {
+    width: calc(100vw - 40px) !important;
+    height: calc(100vh - 40px) !important;
+    max-width: none !important;
+    max-height: none !important;
+    top: 20px !important;
+    left: 20px !important;
+    border-radius: 12px;
+}
+
+.modal.maximized .modal-content {
+    max-height: calc(100vh - 100px);
+}
+
+/* 視窗調整大小手柄 */
+.resize-handle {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    z-index: 10;
+}
+
+.resize-handle.nw {
+    top: 0;
+    left: 0;
+    cursor: nw-resize;
+}
+
+.resize-handle.ne {
+    top: 0;
+    right: 0;
+    cursor: ne-resize;
+}
+
+.resize-handle.sw {
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+}
+
+.resize-handle.se {
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+}
+
+/* 標題列（Windows 風格：高度 22px，最小化／最大化／關閉按鈕靠右） */
+.modal-header {
+    background: linear-gradient(180deg, #f6f6f6, #e8e8e8);
+    height: 22px;
+    padding: 0 0 0 10px;
+    display: flex;
+    align-items: stretch;
+    cursor: move;
+    border-bottom: 1px solid #ddd;
+    flex-shrink: 0;
+}
+
+/* 各視窗的 HTML 中按鈕寫在標題前面，這裡用 order 排到右邊，順序為 最小化、最大化、關閉 */
+.window-controls {
+    display: flex;
+    order: 2;
+    flex-shrink: 0;
+}
+
+.window-btn {
+    position: relative;
+    width: 34px;
+    height: 100%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #333;
+}
+
+.window-btn.minimize { order: 1; }
+.window-btn.maximize { order: 2; }
+.window-btn.close { order: 3; }
+
+.window-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.window-btn.close:hover {
+    background: #e81123;
+    color: white;
+}
+
+/* 按鈕圖示：以 CSS 繪製，各作業系統顯示一致 */
+.window-btn::before,
+.window-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+/* 最小化：─ */
+.window-btn.minimize::before {
+    width: 10px;
+    height: 1px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+}
+
+/* 最大化：□ */
+.window-btn.maximize::before {
+    width: 9px;
+    height: 9px;
+    border: 1px solid currentColor;
+    transform: translate(-50%, -50%);
+}
+
+/* 已最大化時顯示「還原」：前方方框加上右上方露出的後方方框邊線 */
+.modal.maximized .window-btn.maximize::before {
+    width: 7px;
+    height: 7px;
+    transform: translate(-5px, -3px);
+}
+
+.modal.maximized .window-btn.maximize::after {
+    width: 7px;
+    height: 7px;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: translate(-3px, -5px);
+}
+
+/* 關閉：✕ */
+.window-btn.close::before,
+.window-btn.close::after {
+    width: 12px;
+    height: 1px;
+    background: currentColor;
+}
+
+.window-btn.close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.window-btn.close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.modal-title {
+    align-self: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.modal-content {
+    padding: 16px;
+    overflow-y: auto;
+    max-height: calc(90vh - 23px);
+    height: calc(100% - 23px);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.timer-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.timer-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.timer-preset {
+    background: #667eea;
+    color: white;
+}
+
+.timer-action {
+    background: #28ca41;
+    color: white;
+}
+
+.timer-action.stop {
+    background: #ff5f57;
+}
+
+.lottery-input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.browser-url {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* 最大化時內容自適應 */
+.modal.maximized .modal-content {
+    height: calc(100% - 23px);
+    max-height: none;
+}
+
+/* ===== 設定面板 ===== */
+.settings-group {
+    margin-bottom: 20px;
+}
+
+.settings-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.settings-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* ===== 縮放模式 ===== */
+body.scaled {
+    transform: scale(0.67);
+    transform-origin: top left;
+    width: 149.25%;
+    height: 149.25%;
+}
+
+/* ===== Sidebar 迷你模式 ===== */
+.sidebar.mini {
+    transform: scale(0.7);
+    transform-origin: top left;
+}
+
+.sidebar.mini.right {
+    transform-origin: top right;
+}
+
+/* 底部模式的迷你效果：不使用 transform scale，改為縮小內部元素 */
+.sidebar.mini.bottom {
+    transform: translateX(-50%);
+    padding: 6px;
+    gap: 3px;
+}
+
+.sidebar.mini.bottom .sidebar-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+}
+
+.sidebar.mini.bottom .sidebar-label {
+    font-size: 7px;
+}
+
+.sidebar.mini.bottom .sidebar-section {
+    padding: 6px;
+    gap: 3px;
+}
+
+.sidebar.mini.bottom .sidebar-item {
+    gap: 1px;
+}
+
+.gas-settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.gas-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.gas-input-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.gas-input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.gas-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.gas-btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.gas-btn-success {
+    background: #28ca41;
+    color: white;
+}
+
+.gas-btn-danger {
+    background: #ff5f57;
+    color: white;
+}
+
+.gas-btn:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+}
+
+/* 載入動畫 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.loading-overlay.active {
+    display: flex;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== 響應式設計 ===== */
+@media (max-width: 768px) {
+    .sidebar-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+
+    .modal {
+        width: 95vw !important;
+        left: 2.5vw !important;
+    }
+
+    .webcam-container {
+        width: 100%;
+    }
+}
+
+/* ===== 管理圖層（上傳 HTML、PDF 等子功能共用） ===== */
+.manage-layer {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 20, 40, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99980;
+    padding: 16px;
+}
+
+.manage-layer.active {
+    display: flex;
+}
+
+.manage-layer-panel {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    padding: 20px 24px;
+    width: 680px;
+    max-width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.manage-layer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.manage-layer-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.manage-layer-close {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: #eee;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.manage-layer-close:hover {
+    background: #ff5f57;
+    color: white;
+}
+
+.manage-list {
+    max-height: 40vh;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.manage-list:empty::before {
+    content: attr(data-empty);
+    display: block;
+    padding: 20px;
+    text-align: center;
+    color: #999;
+    font-size: 13px;
+}
+
+.manage-item {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.manage-item:last-child {
+    border-bottom: none;
+}
+
+.manage-item-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.manage-item-name {
+    font-weight: 600;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.manage-item-state {
+    font-size: 11px;
+    color: #999;
+}
+
+.manage-item-state.on-screen {
+    color: #1a7f2e;
+}
+
+.manage-item-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.manage-item-actions button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    color: white;
+}
+
+.manage-status {
+    font-size: 12px;
+    color: #1a7f2e;
+    word-break: break-all;
+}
+
+/* ===== 工具列：分類選單、釘選、自動隱藏 ===== */
+/* 左右兩側時高度依內容，不再撐滿整個畫面 */
+.sidebar:not(.bottom) {
+    bottom: auto;
+    max-height: calc(100vh - 20px);
+}
+
+.sidebar-pinned,
+.sidebar-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sidebar.bottom .sidebar-pinned,
+.sidebar.bottom .sidebar-categories {
+    flex-direction: row;
+    flex-shrink: 0;
+}
+
+/* 釘選區與分類之間的分隔線 */
+.sidebar-pinned {
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.sidebar.bottom .sidebar-pinned {
+    padding: 0 6px 0 0;
+    border-bottom: none;
+    border-right: 1px solid #e5e5e5;
+}
+
+.category-item {
+    border-radius: 10px;
+    padding: 2px 0;
+}
+
+.category-item.active {
+    outline: 2px solid #667eea;
+}
+
+.category-item.active .sidebar-label {
+    color: #667eea;
+    font-weight: bold;
+}
+
+/* 彈出的工具面板 */
+.tool-flyout {
+    position: fixed;
+    z-index: 10004;
+    display: none;
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    padding: 8px;
+}
+
+.tool-flyout.active {
+    display: block;
+}
+
+.tool-flyout .sidebar-section {
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0;
+    max-width: 300px;
+}
+
+.tool-flyout .sidebar-section.open {
+    display: flex;
+}
+
+/* 面板標題（分類名稱） */
+.tool-flyout .sidebar-section::before {
+    content: attr(data-icon) ' ' attr(data-category);
+    width: 100%;
+    padding: 0 4px 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+}
+
+.tool-flyout .sidebar-item {
+    position: relative;
+    width: 68px;
+    padding: 4px 2px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.tool-flyout .sidebar-item:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.tool-flyout .sidebar-label {
+    font-size: 12px;
+    color: #333;
+}
+
+/* 釘選星號 */
+.tool-pin {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #bbb;
+    font-size: 14px;
+    line-height: 22px;
+    cursor: pointer;
+}
+
+.tool-pin::before {
+    content: '☆';
+}
+
+.tool-pin.pinned {
+    color: #f0a020;
+}
+
+.tool-pin.pinned::before {
+    content: '★';
+}
+
+/* 自動隱藏：收起時只在畫面邊緣露出一條細邊，內容不可點選（點一下只會展開） */
+.sidebar.left.tucked {
+    transform: translateX(calc(-100% + 14px));
+}
+
+.sidebar.right.tucked {
+    transform: translateX(calc(100% - 14px));
+}
+
+.sidebar.bottom.tucked {
+    transform: translate(-50%, calc(100% - 14px));
+}
+
+.sidebar.tucked {
+    opacity: 0.85;
+    overflow: hidden;
+}
+
+.sidebar.tucked > * {
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* 露出的細邊上的把手 */
+.sidebar.tucked::after {
+    content: '';
+    position: absolute;
+    background: #667eea;
+    border-radius: 2px;
+}
+
+.sidebar.left.tucked::after,
+.sidebar.right.tucked::after {
+    top: 50%;
+    width: 4px;
+    height: 40px;
+    transform: translateY(-50%);
+}
+
+.sidebar.left.tucked::after {
+    right: 5px;
+}
+
+.sidebar.right.tucked::after {
+    left: 5px;
+}
+
+.sidebar.bottom.tucked::after {
+    top: 5px;
+    left: 50%;
+    width: 40px;
+    height: 4px;
+    transform: translateX(-50%);
+}
+
+/* 精簡尺寸：控制按鈕並排、不顯示文字；釘選與分類按鈕縮為 36px */
+.sidebar {
+    gap: 4px;
+    padding: 8px 6px;
+}
+
+.sidebar-controls {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+}
+
+.sidebar.bottom .sidebar-controls {
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sidebar-controls .sidebar-label {
+    display: none;
+}
+
+.sidebar-controls .sidebar-btn {
+    width: 28px;
+    height: 24px;
+    font-size: 14px;
+}
+
+.sidebar-pinned .sidebar-btn,
+.sidebar-categories .sidebar-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+}
+
+.sidebar-pinned .sidebar-item,
+.sidebar-categories .sidebar-item {
+    gap: 0;
+    padding: 2px 4px;
+}
+
+/* 工具列在左右兩側時，釘選與分類排成兩欄，高度約減半 */
+.sidebar:not(.bottom) .sidebar-pinned,
+.sidebar:not(.bottom) .sidebar-categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
