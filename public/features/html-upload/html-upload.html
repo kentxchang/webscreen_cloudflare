@@ -1,0 +1,33 @@
+<!-- 上傳 HTML 管理圖層（獨立圖層，不屬於畫面上的物件） -->
+<div class="manage-layer" id="html-layer" onclick="if (event.target === this) closeHtmlLayer()">
+    <div class="manage-layer-panel">
+        <div class="manage-layer-header">
+            <h2>上傳 HTML 管理</h2>
+            <button class="manage-layer-close" onclick="closeHtmlLayer()" title="關閉">×</button>
+        </div>
+
+        <div class="gas-settings-container">
+            <div class="gas-input-group edit-only">
+                <label>上傳 HTML 檔案（可一次選多個，名稱預設為檔名）</label>
+                <input type="file" id="html-upload-file" accept=".html,.htm,text/html" multiple style="display:none" onchange="uploadHtmlFiles(event)">
+                <button class="gas-btn gas-btn-primary" onclick="document.getElementById('html-upload-file').click()">📁 選擇 HTML 檔案</button>
+            </div>
+
+            <details class="html-paste edit-only">
+                <summary>或貼上 HTML 原始碼</summary>
+                <div class="gas-input-group" style="margin-top:10px;">
+                    <input type="text" class="gas-input" id="html-upload-name" placeholder="輸入名稱...">
+                    <textarea class="gas-input html-upload-code" id="html-upload-code" placeholder="在此貼上 HTML 原始碼..."></textarea>
+                    <button class="gas-btn gas-btn-success" onclick="addPastedHtml()">新增</button>
+                </div>
+            </details>
+
+            <div class="gas-input-group">
+                <label>已上傳的 HTML（<span id="html-item-count">0</span>）</label>
+                <div class="manage-list" id="html-item-list" data-empty="尚未上傳 HTML"></div>
+            </div>
+            <div class="manage-status" id="html-upload-status"></div>
+            <small style="color:#666;font-size:11px;">上傳的 HTML 存在目前畫面的雲端存檔中。「放到畫面」以視窗呈現在畫面上；「分享」會開啟並複製此 HTML 的獨立網址，同時顯示 QR Code（需先雲端存檔；畫面有未存的變更時會先更新存檔）。</small>
+        </div>
+    </div>
+</div>
